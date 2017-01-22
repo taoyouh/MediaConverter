@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="Converter.Pages.CreateTask"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Converter.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Converter.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1" Orientation="Vertical">
+            <controls:FileBrowseControl
+                x:Name="inputFilePicker"
+                x:Uid="CreateTask_InputFilePicker"
+                Margin="8"
+                Header="Input File"
+                Mode="FileOpen" />
+            <controls:TranscodeConfigPicker
+                x:Name="formatPicker"
+                Margin="8"
+                SelectedConfigChanged="FormatPicker_SelectedConfigChanged" />
+            <controls:FileBrowseControl
+                x:Name="outputFilePicker"
+                x:Uid="CreateTask_OutputFilePicker"
+                Margin="8"
+                Header="Output File"
+                Mode="FileSave" />
+        </StackPanel>
+        <Button
+            x:Name="submitButtion"
+            x:Uid="CreateTask_SubmitButton"
+            Grid.Row="2"
+            Margin="8"
+            Click="submitButtion_Click"
+            Content="Create" />
+    </Grid>
+</Page>

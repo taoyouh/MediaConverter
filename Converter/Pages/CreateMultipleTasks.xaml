@@ -1,0 +1,38 @@
+﻿<Page
+    x:Class="Converter.Pages.CreateMultipleTasks"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Converter.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Converter.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1" Orientation="Vertical">
+            <controls:MultipleFilesPanel
+                x:Name="inputFilesPanel"
+                MaxHeight="100"
+                Margin="8" />
+            <controls:TranscodeConfigPicker x:Name="formatPicker" Margin="8" />
+            <controls:FileBrowseControl
+                x:Name="outputFolderBrowser"
+                x:Uid="CreateMultipleTasks_OutputFolderBrowser"
+                Margin="8"
+                Header="Output Folder"
+                Mode="Folder" />
+        </StackPanel>
+        <Button
+            x:Name="submitButton"
+            x:Uid="CreateMultipleTasks_SubmitButton"
+            Grid.Row="2"
+            Margin="8"
+            Click="submitButton_Click"
+            Content="Create Tasks" />
+    </Grid>
+</Page>

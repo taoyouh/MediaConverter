@@ -1,0 +1,37 @@
+﻿<UserControl
+    x:Class="Converter.Controls.MultipleFilesPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Converter.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:storage="using:Windows.Storage"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="StorageFileDisplayItem" x:DataType="storage:StorageFile">
+            <TextBlock Text="{x:Bind DisplayName}" />
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button
+                x:Name="addButton"
+                x:Uid="MultipleFilesPanel_AddButton"
+                Click="addButton_Click"
+                Content="Add" />
+        </StackPanel>
+        <ListView
+            x:Name="fileList"
+            Grid.Row="1"
+            ItemTemplate="{StaticResource StorageFileDisplayItem}"
+            ItemsSource="{Binding}" />
+    </Grid>
+</UserControl>
