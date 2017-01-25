@@ -6,7 +6,7 @@
     xmlns:local="using:Converter.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Converter.ViewModels"
-    d:DesignHeight="300"
+    d:DesignHeight="800"
     d:DesignWidth="400"
     mc:Ignorable="d">
 
@@ -16,13 +16,79 @@
         </DataTemplate>
     </UserControl.Resources>
 
-    <Grid>
+    <StackPanel>
+        <TextBlock
+            x:Uid="TranscodeConfigPicker_FormatHeader"
+            Style="{StaticResource SubtitleTextBlockStyle}"
+            Text="Format" />
         <ComboBox
             x:Name="transcodeConfigComboBox"
             x:Uid="TranscodeConfigPicker_ComboBox"
+            Margin="0,0,0,8"
             Header="Target format"
             ItemTemplate="{StaticResource TranscodeConfigItemTemplate}"
             ItemsSource="{Binding}"
             SelectionChanged="TranscodeConfigComboBox_SelectionChanged" />
-    </Grid>
+        <StackPanel x:Name="AudioPanel">
+            <TextBlock
+                x:Uid="TranscodeConfigPicker_AudioHeader"
+                Style="{StaticResource SubtitleTextBlockStyle}"
+                Text="Audio Settings" />
+            <TextBox
+                x:Name="AudioBitsPerSampleBox"
+                x:Uid="TranscodeConfigPicker_AudioBitsPerSampleBox"
+                Margin="0,0,0,8"
+                Header="Bits per sample"
+                InputScope="Number"
+                LostFocus="AudioBitsPerSampleBox_LostFocus"
+                PlaceholderText="Match source" />
+            <TextBox
+                x:Name="AudioSampleRateBox"
+                x:Uid="TranscodeConfigPicker_AudioSampleRateBox"
+                Margin="0,0,0,8"
+                Header="Sample rate"
+                InputScope="Number"
+                LostFocus="AudioSampleRateBox_LostFocus"
+                PlaceholderText="Match source" />
+            <TextBox
+                x:Name="AudioBitrateBox"
+                x:Uid="TranscodeConfigPicker_AudioBitrateBox"
+                Margin="0,0,0,8"
+                Header="Bitrate"
+                InputScope="Number"
+                LostFocus="AudioBitrateBox_LostFocus"
+                PlaceholderText="Match source" />
+
+        </StackPanel>
+        <StackPanel x:Name="VideoPanel">
+            <TextBlock
+                x:Uid="TranscodeConfigPicker_VideoHeader"
+                Style="{StaticResource SubtitleTextBlockStyle}"
+                Text="Video Settings" />
+            <TextBox
+                x:Name="VideoWidthBox"
+                x:Uid="TranscodeConfigPicker_VideoWidthBox"
+                Margin="0,0,0,8"
+                Header="Frame Width"
+                InputScope="Number"
+                LostFocus="VideoWidthBox_LostFocus"
+                PlaceholderText="Match source" />
+            <TextBox
+                x:Name="VideoHeightBox"
+                x:Uid="TranscodeConfigPicker_VideoHeightBox"
+                Margin="0,0,0,8"
+                Header="Frame Height"
+                InputScope="Number"
+                LostFocus="VideoHeightBox_LostFocus"
+                PlaceholderText="Match source" />
+            <TextBox
+                x:Name="VideoBitrateBox"
+                x:Uid="TranscodeConfigPicker_VideoBitrateBox"
+                Margin="0,0,0,8"
+                Header="Bitrate"
+                InputScope="Number"
+                LostFocus="VideoBitrateBox_LostFocus"
+                PlaceholderText="Match source" />
+        </StackPanel>
+    </StackPanel>
 </UserControl>

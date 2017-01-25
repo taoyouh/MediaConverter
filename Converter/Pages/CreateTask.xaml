@@ -24,7 +24,7 @@
             <controls:TranscodeConfigPicker
                 x:Name="formatPicker"
                 Margin="8"
-                SelectedConfigChanged="FormatPicker_SelectedConfigChanged" />
+                SelectedFormatChanged="FormatPicker_SelectedConfigChanged" />
             <controls:FileBrowseControl
                 x:Name="outputFilePicker"
                 x:Uid="CreateTask_OutputFilePicker"
