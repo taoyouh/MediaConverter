@@ -16,8 +16,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace Converter.Controls
 {
     public sealed partial class MultipleFilesPanel : UserControl
@@ -29,21 +27,29 @@ namespace Converter.Controls
             fileList.DataContext = _selectedFiles;
         }
 
-        private ObservableCollection<StorageFile> _selectedFiles = 
+        private ObservableCollection<StorageFile> _selectedFiles =
             new ObservableCollection<StorageFile>();
+
         public IReadOnlyCollection<StorageFile> SelectedFiles
             => _selectedFiles as IReadOnlyCollection<StorageFile>;
 
         public IEnumerable<string> OpenFileFilters { get; set; }
 
-        private async void addButton_Click(object sender, RoutedEventArgs e)
+        private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
             FileOpenPicker openPicker = new FileOpenPicker();
             if (OpenFileFilters != null)
+            {
                 foreach (var item in OpenFileFilters)
+                {
                     openPicker.FileTypeFilter.Add(item);
+                }
+            }
+
             foreach (var file in await openPicker.PickMultipleFilesAsync())
+            {
                 _selectedFiles.Add(file);
+            }
         }
     }
 }

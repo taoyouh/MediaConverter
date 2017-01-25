@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace Converter.Classes
 {
-    static class TranscodingManager
+    internal static class TranscodingManager
     {
         public static ObservableCollection<TranscodeTask> Tasks
-        {
-            get;
-        } = new ObservableCollection<TranscodeTask>();
+        { get; } = new ObservableCollection<TranscodeTask>();
     }
 }

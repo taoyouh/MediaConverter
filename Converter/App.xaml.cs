@@ -21,12 +21,13 @@ namespace Converter
     /// <summary>
     /// 提供特定于应用程序的行为，以补充默认的应用程序类。
     /// </summary>
-    sealed partial class App : Application
+    public sealed partial class App : Application
     {
-        bool backHandled = false;
+        private bool backHandled = false;
+
         /// <summary>
-        /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
-        /// 已执行，逻辑上等同于 main() 或 WinMain()。
+        /// 初始化<see cref="App"/>类的新实例。
+        /// 这是执行的创作代码的第一行，执行时逻辑上等同于 main() 或 WinMain()。
         /// </summary>
         public App()
         {
@@ -43,7 +44,7 @@ namespace Converter
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
-            if(!backHandled)
+            if (!backHandled)
             {
                 SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
                 backHandled = true;
@@ -61,7 +62,7 @@ namespace Converter
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    //TODO: 从之前挂起的应用程序加载状态
+                    // TODO: 从之前挂起的应用程序加载状态
                 }
 
                 // 将框架放在当前窗口中
@@ -77,6 +78,7 @@ namespace Converter
                     // 参数
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
+
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();
             }
@@ -108,9 +110,9 @@ namespace Converter
         /// <summary>
         /// 导航到特定页失败时调用
         /// </summary>
-        ///<param name="sender">导航失败的框架</param>
-        ///<param name="e">有关导航失败的详细信息</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        /// <param name="sender">导航失败的框架</param>
+        /// <param name="e">有关导航失败的详细信息</param>
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
@@ -125,7 +127,8 @@ namespace Converter
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: 保存应用程序状态并停止任何后台活动
+
+            // TODO: 保存应用程序状态并停止任何后台活动
             deferral.Complete();
         }
     }

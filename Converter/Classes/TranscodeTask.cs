@@ -12,20 +12,21 @@ using Windows.UI.Xaml;
 
 namespace Converter.Classes
 {
-    class TranscodeTask : DependencyObject, INotifyPropertyChanging, INotifyPropertyChanged
+    internal class TranscodeTask : DependencyObject, INotifyPropertyChanging, INotifyPropertyChanged
     {
-        MediaTranscoder transcoder = new MediaTranscoder();
-        StorageFile source, destination;
-        string outputFileName;
-        TranscodeConfiguration config;
+        private MediaTranscoder transcoder = new MediaTranscoder();
+        private StorageFile source;
+        private StorageFile destination;
+        private string outputFileName;
+        private TranscodeConfiguration config;
         private PrepareTranscodeResult prepareResult;
 
-        public TranscodeTask(StorageFile _source, StorageFile _destination, TranscodeConfiguration _config)
+        public TranscodeTask(StorageFile source, StorageFile destination, TranscodeConfiguration config)
         {
-            source = _source;
-            destination = _destination;
-            outputFileName = destination.Name;
-            config = _config;
+            this.source = source;
+            this.destination = destination;
+            outputFileName = this.destination.Name;
+            this.config = config;
             _status = TranscodeStatus.Created;
             _progress = 0;
         }
@@ -39,7 +40,7 @@ namespace Converter.Classes
 
             prepareResult = await transcoder.PrepareFileTranscodeAsync(source, destination, destProfile);
 
-            if(prepareResult.CanTranscode)
+            if (prepareResult.CanTranscode)
             {
                 Status = TranscodeStatus.ReadyToStart;
             }
@@ -55,6 +56,7 @@ namespace Converter.Classes
             {
                 await PrepareAsync();
             }
+
             if (Status == TranscodeStatus.ReadyToStart)
             {
                 Status = TranscodeStatus.InProgress;
@@ -94,9 +96,14 @@ namespace Converter.Classes
         }
 
         private double _progress;
+
         public double Progress
         {
-            get { return _progress; }
+            get
+            {
+                return _progress;
+            }
+
             set
             {
                 if (_progress != value)
@@ -109,19 +116,24 @@ namespace Converter.Classes
         }
 
         private TranscodeStatus _status;
+
         public TranscodeStatus Status
         {
-            get { return _status; }
+            get
+            {
+                return _status;
+            }
+
             set
             {
-                if(_status!=value)
+                if (_status != value)
                 {
                     PropertyChanging?.Invoke(this, new PropertyChangingEventArgs("Status"));
                     _status = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Status"));
                 }
             }
-        } 
+        }
 
         public enum TranscodeStatus
         {
@@ -134,6 +146,7 @@ namespace Converter.Classes
         }
 
         public event PropertyChangingEventHandler PropertyChanging;
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -10,16 +10,23 @@ namespace Converter.Classes
     public class AudioConfiguration
     {
         public string Subtype { get; set; }
+
         public uint? BitsPerSample { get; set; }
+
         public uint? ChannelCount { get; set; }
+
         public uint? SampleRate { get; set; }
+
         public uint? Bitrate { get; set; }
+
         public uint? ChannelMask { get; set; }
 
         public AudioEncodingProperties EncodingProperties(AudioEncodingProperties source)
         {
             if (source == null)
+            {
                 return null;
+            }
 
             var result = new AudioEncodingProperties()
             {

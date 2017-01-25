@@ -10,16 +10,23 @@ namespace Converter.Classes
     public class VideoConfiguration
     {
         public string Subtype { get; set; }
+
         public uint? Height { get; set; }
+
         public uint? Width { get; set; }
+
         public uint? Bitrate { get; set; }
+
         public MediaRatio FrameRate { get; set; }
+
         public MediaRatio PixelAspectRatio { get; set; }
 
         public VideoEncodingProperties EncodingProfiles(VideoEncodingProperties source)
         {
             if (source == null)
+            {
                 return null;
+            }
 
             var result = new VideoEncodingProperties()
             {

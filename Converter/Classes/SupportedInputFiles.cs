@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Converter.Classes
 {
-    static class SupportedInputFiles
+    internal static class SupportedInputFiles
     {
         public static IEnumerable<string> GetList()
         {

@@ -9,40 +9,6 @@ namespace Converter.Classes
 {
     public class TranscodeConfiguration
     {
-        public AudioConfiguration Audio { get; set; }
-        public ContainerConfiguration Container { get; set; }
-        public VideoConfiguration Video { get; set; }
-
-        public KeyValuePair<string, IList<string>> SaveChoice()
-        {
-            string name;
-            string[] fileTypes;
-            switch (Container?.Subtype?.ToUpper())
-            {
-                case "FLAC":
-                    name = "FLAC";
-                    fileTypes = new string[] { ".flac" };
-                    break;
-                case "MPEG4":
-                    if(Video==null)
-                    {
-                        name = "MPEG4 Audio";
-                        fileTypes = new string[] { ".m4a", ".mp4" };
-                    }
-                    else
-                    {
-                        name = "MPEG4 Video";
-                        fileTypes = new string[] { ".mp4", ".m4v" };
-                    }
-                    break;
-                default:
-                    name = "Unknown";
-                    fileTypes = new string[] { "." };
-                    break;
-            }
-            return new KeyValuePair<string, IList<string>>(name, fileTypes);
-        }
-
         public static TranscodeConfiguration CreateAlac()
         {
             var result = new TranscodeConfiguration()
@@ -86,6 +52,44 @@ namespace Converter.Classes
                 CreateAlac(),
                 CreateFlac()
             };
+        }
+
+        public AudioConfiguration Audio { get; set; }
+
+        public ContainerConfiguration Container { get; set; }
+
+        public VideoConfiguration Video { get; set; }
+
+        public KeyValuePair<string, IList<string>> SaveChoice()
+        {
+            string name;
+            string[] fileTypes;
+            switch (Container?.Subtype?.ToUpper())
+            {
+                case "FLAC":
+                    name = "FLAC";
+                    fileTypes = new string[] { ".flac" };
+                    break;
+                case "MPEG4":
+                    if (Video == null)
+                    {
+                        name = "MPEG4 Audio";
+                        fileTypes = new string[] { ".m4a", ".mp4" };
+                    }
+                    else
+                    {
+                        name = "MPEG4 Video";
+                        fileTypes = new string[] { ".mp4", ".m4v" };
+                    }
+
+                    break;
+                default:
+                    name = "Unknown";
+                    fileTypes = new string[] { "." };
+                    break;
+            }
+
+            return new KeyValuePair<string, IList<string>>(name, fileTypes);
         }
 
         public MediaEncodingProfile Profile(MediaEncodingProfile source)

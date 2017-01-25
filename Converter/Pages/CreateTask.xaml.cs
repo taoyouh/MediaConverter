@@ -17,8 +17,6 @@ using Windows.UI.Xaml.Navigation;
 using Converter.Controls;
 using Windows.Storage;
 
-// https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
-
 namespace Converter.Pages
 {
     /// <summary>
@@ -46,15 +44,25 @@ namespace Converter.Pages
             };
         }
 
-        private async void submitButtion_Click(object sender, RoutedEventArgs e)
+        private async void SubmitButtion_Click(object sender, RoutedEventArgs e)
         {
             var config = formatPicker.SelectedConfiguration;
-            if (config == null) throw new Exception();
+            if (config == null)
+            {
+                throw new Exception();
+            }
 
             var source = inputFilePicker.SelectedItem as StorageFile;
-            if (source == null) throw new Exception();
+            if (source == null)
+            {
+                throw new Exception();
+            }
+
             var destination = outputFilePicker.SelectedItem as StorageFile;
-            if (destination == null) throw new Exception();
+            if (destination == null)
+            {
+                throw new Exception();
+            }
 
             TranscodeTask task = new TranscodeTask(source, destination, config);
             await task.PrepareAsync();

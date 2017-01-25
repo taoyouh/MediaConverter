@@ -17,8 +17,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
-
 namespace Converter.Pages
 {
     /// <summary>
@@ -35,13 +33,19 @@ namespace Converter.Pages
             outputFolderBrowser.OpenFileFilters = new string[] { "*" };
         }
 
-        private async void submitButton_Click(object sender, RoutedEventArgs e)
+        private async void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             var config = formatPicker.SelectedConfiguration;
-            if (config == null) throw new Exception();
+            if (config == null)
+            {
+                throw new Exception();
+            }
 
             var outputFolder = outputFolderBrowser.SelectedItem as StorageFolder;
-            if (outputFolder == null) throw new Exception();
+            if (outputFolder == null)
+            {
+                throw new Exception();
+            }
 
             List<TranscodeTask> tasks = new List<TranscodeTask>(inputFilesPanel.SelectedFiles.Count);
 
@@ -50,8 +54,8 @@ namespace Converter.Pages
                 string destFileName = config.SaveChoice().Value.First() != "." ?
                     source.DisplayName + config.SaveChoice().Value.First() :
                     source.DisplayName;
-                var destination = await outputFolder.CreateFileAsync
-                    (destFileName, CreationCollisionOption.GenerateUniqueName);
+                var destination = await outputFolder.CreateFileAsync(
+                    destFileName, CreationCollisionOption.GenerateUniqueName);
 
                 tasks.Add(new TranscodeTask(source, destination, config));
             }
@@ -62,7 +66,7 @@ namespace Converter.Pages
                   await x.PrepareAsync();
               })));
 
-            foreach(var task in tasks)
+            foreach (var task in tasks)
             {
                 task.StartTranscode();
                 TranscodingManager.Tasks.Add(task);

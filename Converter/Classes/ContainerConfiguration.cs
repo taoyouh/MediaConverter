@@ -14,7 +14,9 @@ namespace Converter.Classes
         public ContainerEncodingProperties EncodingProperties(ContainerEncodingProperties source)
         {
             if (source == null)
+            {
                 return null;
+            }
 
             var result = new ContainerEncodingProperties()
             {
