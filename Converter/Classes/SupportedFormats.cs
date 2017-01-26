@@ -27,14 +27,6 @@ namespace Converter.Classes
 
         public static IEnumerable<TranscodeConfigListItem> TranscodeConfigs()
         {
-            var a = Windows.Media.MediaProperties.MediaEncodingProfile.CreateAvi(Windows.Media.MediaProperties.VideoEncodingQuality.HD1080p);
-            var b = Windows.Media.MediaProperties.MediaEncodingProfile.CreateM4a(Windows.Media.MediaProperties.AudioEncodingQuality.High);
-            var c = Windows.Media.MediaProperties.MediaEncodingProfile.CreateMp3(Windows.Media.MediaProperties.AudioEncodingQuality.High);
-            var d = Windows.Media.MediaProperties.MediaEncodingProfile.CreateWav(Windows.Media.MediaProperties.AudioEncodingQuality.High);
-            var e = Windows.Media.MediaProperties.MediaEncodingProfile.CreateWma(Windows.Media.MediaProperties.AudioEncodingQuality.High);
-            var f = Windows.Media.MediaProperties.MediaEncodingProfile.CreateWmv(Windows.Media.MediaProperties.VideoEncodingQuality.HD1080p);
-
-            var g = a;
             return new TranscodeConfigListItem[]
             {
                 new TranscodeConfigListItem()
