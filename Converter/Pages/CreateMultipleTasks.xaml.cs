@@ -28,7 +28,7 @@ namespace Converter.Pages
         {
             this.InitializeComponent();
 
-            inputFilesPanel.OpenFileFilters = SupportedInputFiles.GetList();
+            inputFilesPanel.OpenFileFilters = SupportedFormats.InputFileTypes();
 
             outputFolderBrowser.OpenFileFilters = new string[] { "*" };
         }

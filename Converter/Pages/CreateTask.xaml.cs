@@ -28,7 +28,7 @@ namespace Converter.Pages
         {
             this.InitializeComponent();
 
-            inputFilePicker.OpenFileFilters = SupportedInputFiles.GetList();
+            inputFilePicker.OpenFileFilters = SupportedFormats.InputFileTypes();
 
             outputFilePicker.SaveFileChoices = new List<KeyValuePair<string, IList<string>>>()
             {

@@ -24,11 +24,8 @@ namespace Converter.Controls
         {
             this.InitializeComponent();
 
-            transcodeConfigComboBox.DataContext = new List<TranscodeConfigListItem>()
-            {
-                new TranscodeConfigListItem() { DisplayName = "ALAC", Configuration = TranscodeConfiguration.CreateAlac() },
-                new TranscodeConfigListItem() { DisplayName = "FLAC", Configuration = TranscodeConfiguration.CreateFlac() }
-            };
+            transcodeConfigComboBox.DataContext = SupportedFormats.TranscodeConfigs();
+
             AudioPanel.Visibility = _selectedConfiguration?.Audio == null ?
                 Visibility.Collapsed : Visibility.Visible;
             VideoPanel.Visibility = _selectedConfiguration?.Video == null ?

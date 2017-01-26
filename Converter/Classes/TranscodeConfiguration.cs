@@ -45,13 +45,76 @@ namespace Converter.Classes
             return result;
         }
 
-        public static IEnumerable<TranscodeConfiguration> PresetConfigs()
+        public static TranscodeConfiguration CreateAac()
         {
-            return new TranscodeConfiguration[]
+            var result = new TranscodeConfiguration()
             {
-                CreateAlac(),
-                CreateFlac()
+                Audio = new AudioConfiguration()
+                {
+                    Subtype = "AAC"
+                },
+                Container = new ContainerConfiguration()
+                {
+                    Subtype = "MPEG4"
+                }
             };
+
+            return result;
+        }
+
+        public static TranscodeConfiguration CreateMp3()
+        {
+            var result = new TranscodeConfiguration()
+            {
+                Audio = new AudioConfiguration()
+                {
+                    Subtype = "MP3"
+                },
+                Container = new ContainerConfiguration()
+                {
+                    Subtype = "MP3"
+                }
+            };
+
+            return result;
+        }
+
+        public static TranscodeConfiguration CreateWma()
+        {
+            var result = new TranscodeConfiguration()
+            {
+                Audio = new AudioConfiguration()
+                {
+                    Subtype = "WMA9"
+                },
+                Container = new ContainerConfiguration()
+                {
+                    Subtype = "ASF"
+                }
+            };
+
+            return result;
+        }
+
+        public static TranscodeConfiguration CreateMp4Avc()
+        {
+            var result = new TranscodeConfiguration()
+            {
+                Audio = new AudioConfiguration()
+                {
+                    Subtype = "AAC",
+                },
+                Video = new VideoConfiguration()
+                {
+                    Subtype = "H264",
+                },
+                Container = new ContainerConfiguration()
+                {
+                    Subtype = "MPEG4"
+                }
+            };
+
+            return result;
         }
 
         public AudioConfiguration Audio { get; set; }
@@ -83,9 +146,35 @@ namespace Converter.Classes
                     }
 
                     break;
+                case "MP3":
+                    name = "MP3";
+                    fileTypes = new string[] { ".mp3" };
+                    break;
+                case "ASF":
+                    if (Video == null)
+                    {
+                        name = "Windows Media Audio";
+                        fileTypes = new string[] { ".wma", ".asf" };
+                    }
+                    else
+                    {
+                        name = "Windows Media Video";
+                        fileTypes = new string[] { ".wmv", ".asf" };
+                    }
+
+                    break;
                 default:
-                    name = "Unknown";
-                    fileTypes = new string[] { "." };
+                    if (Container == null)
+                    {
+                        name = "Unknown";
+                        fileTypes = new string[] { "." };
+                    }
+                    else
+                    {
+                        name = Container.Subtype;
+                        fileTypes = new string[] { "." + Container.Subtype.ToLower() };
+                    }
+
                     break;
             }
 
