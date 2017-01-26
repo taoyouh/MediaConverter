@@ -37,7 +37,7 @@
             x:Uid="CreateTask_SubmitButton"
             Grid.Row="2"
             Margin="8"
-            Click="submitButtion_Click"
+            Click="SubmitButtion_Click"
             Content="Create" />
     </Grid>
 </Page>

@@ -21,7 +21,7 @@
             Grid.Column="1"
             Margin="8,0,0,0"
             VerticalAlignment="Bottom"
-            Click="browseButton_Click"
+            Click="BrowseButton_Click"
             Content="Browse" />
     </Grid>
 </UserControl>

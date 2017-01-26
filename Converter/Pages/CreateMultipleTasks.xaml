@@ -32,7 +32,7 @@
             x:Uid="CreateMultipleTasks_SubmitButton"
             Grid.Row="2"
             Margin="8"
-            Click="submitButton_Click"
+            Click="SubmitButton_Click"
             Content="Create Tasks" />
     </Grid>
 </Page>

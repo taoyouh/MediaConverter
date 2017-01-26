@@ -25,7 +25,7 @@
             <Button
                 x:Name="addButton"
                 x:Uid="MultipleFilesPanel_AddButton"
-                Click="addButton_Click"
+                Click="AddButton_Click"
                 Content="Add" />
         </StackPanel>
         <ListView
