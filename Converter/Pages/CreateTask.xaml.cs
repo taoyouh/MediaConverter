@@ -1,4 +1,5 @@
 ﻿using Converter.Classes;
+using Converter.Controls;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.MediaProperties;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -14,8 +16,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Converter.Controls;
-using Windows.Storage;
 
 namespace Converter.Pages
 {
@@ -36,11 +36,13 @@ namespace Converter.Pages
             };
         }
 
-        private void FormatPicker_SelectedConfigChanged(TranscodeConfigPicker sender, TranscodeConfiguration newConfig)
+        private void FormatPicker_SelectedConfigChanged(object sender, EventArgs newConfig)
         {
+            var formatPicker = sender as TranscodeConfigPicker;
             outputFilePicker.SaveFileChoices = new List<KeyValuePair<string, IList<string>>>()
             {
-                (newConfig ?? new TranscodeConfiguration()).SaveChoice()
+                (formatPicker?.SelectedConfiguration
+                ?? new TranscodeConfiguration()).SaveChoice()
             };
         }
 

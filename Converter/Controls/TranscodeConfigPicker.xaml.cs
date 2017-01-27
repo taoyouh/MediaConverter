@@ -66,14 +66,14 @@ namespace Converter.Controls
             _selectedConfiguration =
                 (transcodeConfigComboBox.SelectedItem as TranscodeConfigListItem)?.
                     Configuration;
-            SelectedFormatChanged?.Invoke(this, SelectedConfiguration);
+            SelectedFormatChanged?.Invoke(this, new EventArgs());
             AudioPanel.Visibility = _selectedConfiguration?.Audio == null ?
                 Visibility.Collapsed : Visibility.Visible;
             VideoPanel.Visibility = _selectedConfiguration?.Video == null ?
                 Visibility.Collapsed : Visibility.Visible;
         }
 
-        public delegate void ConfigChangedEventHandler(TranscodeConfigPicker sender, TranscodeConfiguration newConfig);
+        public delegate void ConfigChangedEventHandler(object sender, EventArgs e);
 
         public event ConfigChangedEventHandler SelectedFormatChanged;
 
