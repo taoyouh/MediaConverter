@@ -33,16 +33,24 @@ namespace Converter.Classes
 
         public async Task PrepareAsync()
         {
+            if (Status != TranscodeStatus.Created)
+            {
+                return;
+            }
+            else
+            {
+                Status = TranscodeStatus.Preparing;
+            }
+
             var sourceProfile = await MediaEncodingProfile.CreateFromFileAsync(source);
             var destProfile = config.Profile(sourceProfile);
-
-            await destination.RenameAsync(destination.Name + ".transcodetmp", NameCollisionOption.GenerateUniqueName);
 
             prepareResult = await transcoder.PrepareFileTranscodeAsync(source, destination, destProfile);
 
             if (prepareResult.CanTranscode)
             {
                 Status = TranscodeStatus.ReadyToStart;
+                await destination.RenameAsync(destination.Name + ".transcodetmp", NameCollisionOption.GenerateUniqueName);
             }
             else
             {
@@ -138,6 +146,7 @@ namespace Converter.Classes
         public enum TranscodeStatus
         {
             Created,
+            Preparing,
             ReadyToStart,
             InProgress,
             Completed,

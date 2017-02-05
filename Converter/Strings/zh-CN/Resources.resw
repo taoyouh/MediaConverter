@@ -120,17 +120,44 @@
   <data name="AppTitle" xml:space="preserve">
     <value>格式转换</value>
   </data>
+  <data name="CreateMultipleTasks_CreationFailed" xml:space="preserve">
+    <value>创建任务失败</value>
+  </data>
   <data name="CreateMultipleTasks_OutputFolderBrowser.Header" xml:space="preserve">
     <value>输出目录</value>
   </data>
+  <data name="CreateMultipleTasks_SpecifyConfig" xml:space="preserve">
+    <value>请选择输出格式</value>
+  </data>
+  <data name="CreateMultipleTasks_SpecifyInput" xml:space="preserve">
+    <value>请选择输入文件</value>
+  </data>
+  <data name="CreateMultipleTasks_SpecifyOutput" xml:space="preserve">
+    <value>请选择输出文件夹</value>
+  </data>
   <data name="CreateMultipleTasks_SubmitButton.Content" xml:space="preserve">
     <value>创建任务</value>
+  </data>
+  <data name="CreateTask_CannotStart" xml:space="preserve">
+    <value>无法开始任务。可能是因为缺少编解码器。</value>
+  </data>
+  <data name="CreateTask_CreationFailed" xml:space="preserve">
+    <value>创建任务失败</value>
   </data>
   <data name="CreateTask_InputFilePicker.Header" xml:space="preserve">
     <value>输入文件</value>
   </data>
   <data name="CreateTask_OutputFilePicker.Header" xml:space="preserve">
     <value>输出文件</value>
+  </data>
+  <data name="CreateTask_SpecifyConfig" xml:space="preserve">
+    <value>请选择输出格式</value>
+  </data>
+  <data name="CreateTask_SpecifyInput" xml:space="preserve">
+    <value>请选择输入文件</value>
+  </data>
+  <data name="CreateTask_SpecifyOutput" xml:space="preserve">
+    <value>请选择输出文件</value>
   </data>
   <data name="CreateTask_SubmitButton.Content" xml:space="preserve">
     <value>创建任务</value>
