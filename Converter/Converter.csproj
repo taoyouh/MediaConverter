@@ -114,6 +114,9 @@
     <Compile Include="Controls\FileBrowseControl.xaml.cs">
       <DependentUpon>FileBrowseControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FileOpenControl.cs" />
+    <Compile Include="Controls\FileSaveControl.cs" />
+    <Compile Include="Controls\FolderPickerControl.cs" />
     <Compile Include="Controls\MultipleFilesPanel.xaml.cs">
       <DependentUpon>MultipleFilesPanel.xaml</DependentUpon>
     </Compile>

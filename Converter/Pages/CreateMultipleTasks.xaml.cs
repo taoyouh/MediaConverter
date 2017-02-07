@@ -36,7 +36,7 @@ namespace Converter.Pages
 
             inputFilesPanel.OpenFileFilters = SupportedFormats.InputFileTypes();
 
-            outputFolderBrowser.OpenFileFilters = new string[] { "*" };
+            outputFolderBrowser.FileTypeFilter = new string[] { "*" };
         }
 
         private async void SubmitButton_Click(object sender, RoutedEventArgs e)

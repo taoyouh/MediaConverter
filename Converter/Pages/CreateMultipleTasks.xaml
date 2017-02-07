@@ -20,12 +20,11 @@
                 MaxHeight="100"
                 Margin="8" />
             <controls:TranscodeConfigPicker x:Name="formatPicker" Margin="8" />
-            <controls:FileBrowseControl
+            <controls:FolderPickerControl
                 x:Name="outputFolderBrowser"
                 x:Uid="CreateMultipleTasks_OutputFolderBrowser"
                 Margin="8"
-                Header="Output Folder"
-                Mode="Folder" />
+                Header="Output Folder" />
         </StackPanel>
         <Button
             x:Name="submitButton"

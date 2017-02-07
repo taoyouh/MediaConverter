@@ -15,22 +15,20 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1" Orientation="Vertical">
-            <controls:FileBrowseControl
+            <controls:FileOpenControl
                 x:Name="inputFilePicker"
                 x:Uid="CreateTask_InputFilePicker"
                 Margin="8"
-                Header="Input File"
-                Mode="FileOpen" />
+                Header="Input File" />
             <controls:TranscodeConfigPicker
                 x:Name="formatPicker"
                 Margin="8"
                 SelectedFormatChanged="FormatPicker_SelectedConfigChanged" />
-            <controls:FileBrowseControl
+            <controls:FileSaveControl
                 x:Name="outputFilePicker"
                 x:Uid="CreateTask_OutputFilePicker"
                 Margin="8"
-                Header="Output File"
-                Mode="FileSave" />
+                Header="Output File" />
         </StackPanel>
         <Button
             x:Name="submitButtion"

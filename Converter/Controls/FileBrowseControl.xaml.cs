@@ -17,19 +17,8 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Converter.Controls
 {
-    public sealed partial class FileBrowseControl : UserControl
+    public abstract partial class FileBrowseControl : UserControl
     {
-        public IEnumerable<string> OpenFileFilters { get; set; }
-
-        public IEnumerable<KeyValuePair<string, IList<string>>> SaveFileChoices { get; set; }
-
-        public enum BrowseModes
-        {
-            FileOpen, FileSave, Folder
-        }
-
-        public BrowseModes Mode { get; set; }
-
         public FileBrowseControl()
         {
             this.InitializeComponent();
@@ -46,10 +35,16 @@ namespace Converter.Controls
 
             set
             {
-                _selectedItem = value;
-                urlBox.Text = _selectedItem?.Path ?? string.Empty;
+                if (SelectedItem != value)
+                {
+                    _selectedItem = value;
+                    urlBox.Text = _selectedItem?.Path ?? string.Empty;
+                    SelectionChanged?.Invoke(this, new EventArgs());
+                }
             }
         }
+
+        public event EventHandler<EventArgs> SelectionChanged;
 
         public object Header
         {
@@ -63,47 +58,6 @@ namespace Converter.Controls
             set { browseButton.Content = value; }
         }
 
-        private async void BrowseButton_Click(object sender, RoutedEventArgs e)
-        {
-            switch (Mode)
-            {
-                case BrowseModes.FileOpen:
-                    FileOpenPicker openPicker = new FileOpenPicker();
-                    if (OpenFileFilters != null)
-                    {
-                        foreach (var item in OpenFileFilters)
-                        {
-                            openPicker.FileTypeFilter.Add(item);
-                        }
-                    }
-
-                    SelectedItem = await openPicker.PickSingleFileAsync();
-                    break;
-                case BrowseModes.FileSave:
-                    FileSavePicker savePicker = new FileSavePicker();
-                    if (SaveFileChoices != null)
-                    {
-                        foreach (var item in SaveFileChoices)
-                        {
-                            savePicker.FileTypeChoices.Add(item);
-                        }
-                    }
-
-                    SelectedItem = await savePicker.PickSaveFileAsync();
-                    break;
-                case BrowseModes.Folder:
-                    FolderPicker folderPicker = new FolderPicker();
-                    if (OpenFileFilters != null)
-                    {
-                        foreach (var item in OpenFileFilters)
-                        {
-                            folderPicker.FileTypeFilter.Add(item);
-                        }
-                    }
-
-                    SelectedItem = await folderPicker.PickSingleFolderAsync();
-                    break;
-            }
-        }
+        protected abstract void BrowseButton_Click(object sender, RoutedEventArgs e);
     }
 }
