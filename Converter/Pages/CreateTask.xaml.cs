@@ -95,5 +95,11 @@ namespace Converter.Pages
                 var result = dialog.ShowAsync();
             }
         }
+
+        private void InputFilePicker_SelectionChanged(object sender, EventArgs e)
+        {
+            var selectedFile = inputFilePicker.SelectedItem as StorageFile;
+            outputFilePicker.SuggestedFileName = selectedFile?.DisplayName ?? string.Empty;
+        }
     }
 }

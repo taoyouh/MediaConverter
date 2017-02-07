@@ -19,7 +19,8 @@
                 x:Name="inputFilePicker"
                 x:Uid="CreateTask_InputFilePicker"
                 Margin="8"
-                Header="Input File" />
+                Header="Input File"
+                SelectionChanged="InputFilePicker_SelectionChanged" />
             <controls:TranscodeConfigPicker
                 x:Name="formatPicker"
                 Margin="8"
