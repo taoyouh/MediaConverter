@@ -123,6 +123,9 @@
     <Compile Include="Controls\TranscodeConfigPicker.xaml.cs">
       <DependentUpon>TranscodeConfigPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TranscodeTaskListItem.xaml.cs">
+      <DependentUpon>TranscodeTaskListItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\CreateMultipleTasks.xaml.cs">
       <DependentUpon>CreateMultipleTasks.xaml</DependentUpon>
     </Compile>
@@ -165,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\TranscodeConfigPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TranscodeTaskListItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

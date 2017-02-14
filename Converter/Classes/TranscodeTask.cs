@@ -12,8 +12,17 @@ using Windows.UI.Xaml;
 
 namespace Converter.Classes
 {
-    internal class TranscodeTask : DependencyObject, INotifyPropertyChanging, INotifyPropertyChanged
+    public class TranscodeTask : DependencyObject, INotifyPropertyChanging, INotifyPropertyChanged
     {
+        private const string Cancelled = "TranscodeStatus_Cancelled";
+        private const string Completed = "TranscodeStatus_Completed";
+        private const string Created = "TranscodeStatus_Created";
+        private const string Error = "TranscodeStatus_Error";
+        private const string InProgress = "TranscodeStatus_InProgress";
+        private const string Preparing = "TranscodeStatus_Preparing";
+        private const string ReadyToStart = "TranscodeStatus_ReadyToStart";
+        private const string Unknown = "TranscodeStatus_Unknown";
+
         private MediaTranscoder transcoder = new MediaTranscoder();
         private StorageFile source;
         private StorageFile destination;
@@ -103,6 +112,11 @@ namespace Converter.Classes
             });
         }
 
+        public string OutputFileName
+        {
+            get { return outputFileName; }
+        }
+
         private double _progress;
 
         public double Progress
@@ -136,9 +150,11 @@ namespace Converter.Classes
             {
                 if (_status != value)
                 {
-                    PropertyChanging?.Invoke(this, new PropertyChangingEventArgs("Status"));
+                    PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(nameof(Status)));
+                    PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(nameof(StatusString)));
                     _status = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Status"));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Status)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StatusString)));
                 }
             }
         }
@@ -152,6 +168,33 @@ namespace Converter.Classes
             Completed,
             Cancelled,
             Error
+        }
+
+        public string StatusString
+        {
+            get
+            {
+                var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+                switch (Status)
+                {
+                    case TranscodeStatus.Cancelled:
+                        return loader.GetString(Cancelled);
+                    case TranscodeStatus.Completed:
+                        return loader.GetString(Completed);
+                    case TranscodeStatus.Created:
+                        return loader.GetString(Created);
+                    case TranscodeStatus.Error:
+                        return loader.GetString(Error);
+                    case TranscodeStatus.InProgress:
+                        return loader.GetString(InProgress);
+                    case TranscodeStatus.Preparing:
+                        return loader.GetString(Preparing);
+                    case TranscodeStatus.ReadyToStart:
+                        return loader.GetString(ReadyToStart);
+                    default:
+                        return loader.GetString(Unknown);
+                }
+            }
         }
 
         public event PropertyChangingEventHandler PropertyChanging;

@@ -222,4 +222,28 @@
   <data name="TranscodeConfigPicker_VideoWidthBox.PlaceholderText" xml:space="preserve">
     <value>与输入文件相同</value>
   </data>
+  <data name="TranscodeStatus_Cancelled" xml:space="preserve">
+    <value>已取消</value>
+  </data>
+  <data name="TranscodeStatus_Completed" xml:space="preserve">
+    <value>已完成</value>
+  </data>
+  <data name="TranscodeStatus_Created" xml:space="preserve">
+    <value>已创建</value>
+  </data>
+  <data name="TranscodeStatus_Error" xml:space="preserve">
+    <value>出错</value>
+  </data>
+  <data name="TranscodeStatus_InProgress" xml:space="preserve">
+    <value>正在进行</value>
+  </data>
+  <data name="TranscodeStatus_Preparing" xml:space="preserve">
+    <value>正在准备</value>
+  </data>
+  <data name="TranscodeStatus_ReadyToStart" xml:space="preserve">
+    <value>准备就绪</value>
+  </data>
+  <data name="TranscodeStatus_Unknown" xml:space="preserve">
+    <value>未知状态</value>
+  </data>
 </root>
