@@ -46,6 +46,7 @@ namespace Converter
 
             if (!backHandled)
             {
+                Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(320, 500));
                 SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
                 backHandled = true;
             }
