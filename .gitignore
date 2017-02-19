@@ -262,3 +262,6 @@ __pycache__/
 
 # Windows Thumbnails
 Thumbs.db
+
+# Temporary Files
+Temp
