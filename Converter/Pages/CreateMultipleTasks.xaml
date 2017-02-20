@@ -14,18 +14,23 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="1" Orientation="Vertical">
-            <controls:MultipleFilesPanel
-                x:Name="inputFilesPanel"
-                MaxHeight="100"
-                Margin="8" />
-            <controls:TranscodeConfigPicker x:Name="formatPicker" Margin="8" />
-            <controls:FolderPickerControl
-                x:Name="outputFolderBrowser"
-                x:Uid="CreateMultipleTasks_OutputFolderBrowser"
-                Margin="8"
-                Header="Output Folder" />
-        </StackPanel>
+        <ScrollViewer
+            Grid.Row="1"
+            HorizontalScrollMode="Disabled"
+            VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="8" Orientation="Vertical">
+                <controls:MultipleFilesPanel
+                    x:Name="inputFilesPanel"
+                    MaxHeight="100"
+                    Margin="8" />
+                <controls:TranscodeConfigPicker x:Name="formatPicker" Margin="8" />
+                <controls:FolderPickerControl
+                    x:Name="outputFolderBrowser"
+                    x:Uid="CreateMultipleTasks_OutputFolderBrowser"
+                    Margin="8"
+                    Header="Output Folder" />
+            </StackPanel>
+        </ScrollViewer>
         <Button
             x:Name="submitButton"
             x:Uid="CreateMultipleTasks_SubmitButton"

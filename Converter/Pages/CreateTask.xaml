@@ -14,23 +14,28 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="1" Orientation="Vertical">
-            <controls:FileOpenControl
-                x:Name="inputFilePicker"
-                x:Uid="CreateTask_InputFilePicker"
-                Margin="8"
-                Header="Input File"
-                SelectionChanged="InputFilePicker_SelectionChanged" />
-            <controls:TranscodeConfigPicker
-                x:Name="formatPicker"
-                Margin="8"
-                SelectedFormatChanged="FormatPicker_SelectedConfigChanged" />
-            <controls:FileSaveControl
-                x:Name="outputFilePicker"
-                x:Uid="CreateTask_OutputFilePicker"
-                Margin="8"
-                Header="Output File" />
-        </StackPanel>
+        <ScrollViewer
+            Grid.Row="1"
+            HorizontalScrollMode="Disabled"
+            VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="8" Orientation="Vertical">
+                <controls:FileOpenControl
+                    x:Name="inputFilePicker"
+                    x:Uid="CreateTask_InputFilePicker"
+                    Margin="8"
+                    Header="Input File"
+                    SelectionChanged="InputFilePicker_SelectionChanged" />
+                <controls:TranscodeConfigPicker
+                    x:Name="formatPicker"
+                    Margin="8"
+                    SelectedFormatChanged="FormatPicker_SelectedConfigChanged" />
+                <controls:FileSaveControl
+                    x:Name="outputFilePicker"
+                    x:Uid="CreateTask_OutputFilePicker"
+                    Margin="8"
+                    Header="Output File" />
+            </StackPanel>
+        </ScrollViewer>
         <Button
             x:Name="submitButtion"
             x:Uid="CreateTask_SubmitButton"

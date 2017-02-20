@@ -2,18 +2,20 @@
     x:Class="Converter.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:classes="using:Converter.Classes"
+    xmlns:controls="using:Converter.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:Converter"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
     <Page.Resources>
-        <DataTemplate x:Key="TaskListItem">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Margin="8" Text="{Binding Progress}" />
-                <TextBlock Margin="8" Text="{Binding Status}" />
-            </StackPanel>
+        <DataTemplate x:Key="TaskListItem" x:DataType="classes:TranscodeTask">
+            <controls:TranscodeTaskListItem DataContext="{x:Bind}" />
         </DataTemplate>
+        <Style x:Key="TaskListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -38,6 +40,7 @@
         <ListView
             x:Name="taskListView"
             Grid.Row="1"
+            ItemContainerStyle="{StaticResource TaskListViewItemStyle}"
             ItemTemplate="{StaticResource TaskListItem}"
             ItemsSource="{Binding}" />
     </Grid>
