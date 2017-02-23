@@ -6,6 +6,7 @@
     xmlns:local="using:Converter.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:storage="using:Windows.Storage"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     d:DesignHeight="300"
     d:DesignWidth="400"
     mc:Ignorable="d">
@@ -25,13 +26,46 @@
             <Button
                 x:Name="addButton"
                 x:Uid="MultipleFilesPanel_AddButton"
+                Margin="8"
                 Click="AddButton_Click"
                 Content="Add" />
+            <Button
+                x:Name="removeButton"
+                x:Uid="MultipleFilesPanel_RemoveButton"
+                Margin="8"
+                Click="RemoveButton_Click"
+                Content="Remove Selected"
+                Visibility="Collapsed" />
         </StackPanel>
+        <TextBlock
+            x:Name="DropHint"
+            x:Uid="MultipleFilesPanel_DropHint"
+            Grid.Row="1"
+            VerticalAlignment="Center"
+            Text="Drop files or folders here"
+            TextAlignment="Center" />
         <ListView
             x:Name="fileList"
             Grid.Row="1"
+            MinHeight="200"
+            AllowDrop="True"
+            DragOver="FileList_DragOver"
+            Drop="FileList_Drop"
             ItemTemplate="{StaticResource StorageFileDisplayItem}"
-            ItemsSource="{Binding}" />
+            ItemsSource="{Binding}"
+            SelectionChanged="FileList_SelectionChanged"
+            SelectionMode="Multiple" />
+        <toolkit:Loading
+            x:Name="loadingControl"
+            Grid.RowSpan="2"
+            Background="{ThemeResource SystemControlBackgroundAltMediumBrush}"
+            IsLoading="False">
+            <ContentControl x:Name="loadingContentControl">
+                <ProgressRing
+                    Width="50"
+                    Height="50"
+                    IsActive="True" />
+            </ContentControl>
+        </toolkit:Loading>
     </Grid>
 </UserControl>

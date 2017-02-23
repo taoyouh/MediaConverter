@@ -21,7 +21,7 @@
             <StackPanel Margin="8" Orientation="Vertical">
                 <controls:MultipleFilesPanel
                     x:Name="inputFilesPanel"
-                    MaxHeight="100"
+                    MaxHeight="400"
                     Margin="8" />
                 <controls:TranscodeConfigPicker x:Name="formatPicker" Margin="8" />
                 <controls:FolderPickerControl
