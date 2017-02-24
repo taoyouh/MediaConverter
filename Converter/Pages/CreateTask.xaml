@@ -6,7 +6,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:Converter.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
+
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <DrillInNavigationTransitionInfo />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -43,5 +54,17 @@
             Margin="8"
             Click="SubmitButtion_Click"
             Content="Create" />
+        <toolkit:Loading
+            x:Name="loadingControl"
+            Grid.RowSpan="3"
+            Background="{ThemeResource SystemControlBackgroundAltMediumBrush}"
+            IsLoading="False">
+            <ContentControl x:Name="loadingContentControl">
+                <ProgressRing
+                    Width="50"
+                    Height="50"
+                    IsActive="True" />
+            </ContentControl>
+        </toolkit:Loading>
     </Grid>
 </Page>
