@@ -13,8 +13,31 @@
 
     <UserControl.Resources>
         <DataTemplate x:Key="StorageFileDisplayItem" x:DataType="storage:StorageFile">
-            <TextBlock Text="{x:Bind DisplayName}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="{x:Bind Name}"
+                    TextWrapping="WrapWholeWords" />
+                <Button
+                    x:Name="removeSingleButton"
+                    Grid.Column="1"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Click="RemoveSingleButton_Click">
+                    <SymbolIcon
+                        Margin="8,0"
+                        VerticalAlignment="Center"
+                        Symbol="Remove" />
+                </Button>
+            </Grid>
         </DataTemplate>
+        <Style x:Key="FileListItemStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
     </UserControl.Resources>
 
     <Grid>
@@ -51,10 +74,11 @@
             AllowDrop="True"
             DragOver="FileList_DragOver"
             Drop="FileList_Drop"
+            ItemContainerStyle="{StaticResource FileListItemStyle}"
             ItemTemplate="{StaticResource StorageFileDisplayItem}"
             ItemsSource="{Binding}"
             SelectionChanged="FileList_SelectionChanged"
-            SelectionMode="Multiple" />
+            SelectionMode="Extended" />
         <toolkit:Loading
             x:Name="loadingControl"
             Grid.RowSpan="2"

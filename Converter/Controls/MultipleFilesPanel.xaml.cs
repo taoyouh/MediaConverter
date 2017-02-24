@@ -138,5 +138,14 @@ namespace Converter.Controls
                 nameof(haveSelectionState);
             VisualStateManager.GoToState(this, targetState, true);
         }
+
+        private void RemoveSingleButton_Click(object sender, RoutedEventArgs e)
+        {
+            var itemToRemove = (sender as Button)?.DataContext as StorageFile;
+            if (itemToRemove != null)
+            {
+                _selectedFiles.Remove(itemToRemove);
+            }
+        }
     }
 }
