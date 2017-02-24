@@ -67,5 +67,23 @@
                     IsActive="True" />
             </ContentControl>
         </toolkit:Loading>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="noFileState" />
+                <VisualState x:Name="haveFileState">
+                    <VisualState.Setters>
+                        <Setter Target="DropHint.(UIElement.Visibility)" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup>
+                <VisualState x:Name="noSelectionState" />
+                <VisualState x:Name="haveSelectionState">
+                    <VisualState.Setters>
+                        <Setter Target="removeButton.(UIElement.Visibility)" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </UserControl>
