@@ -6,14 +6,38 @@
     xmlns:local="using:Converter.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:storage="using:Windows.Storage"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     d:DesignHeight="300"
     d:DesignWidth="400"
     mc:Ignorable="d">
 
     <UserControl.Resources>
         <DataTemplate x:Key="StorageFileDisplayItem" x:DataType="storage:StorageFile">
-            <TextBlock Text="{x:Bind DisplayName}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="{x:Bind Name}"
+                    TextWrapping="WrapWholeWords" />
+                <Button
+                    x:Name="removeSingleButton"
+                    Grid.Column="1"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Click="RemoveSingleButton_Click">
+                    <SymbolIcon
+                        Margin="8,0"
+                        VerticalAlignment="Center"
+                        Symbol="Remove" />
+                </Button>
+            </Grid>
         </DataTemplate>
+        <Style x:Key="FileListItemStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
     </UserControl.Resources>
 
     <Grid>
@@ -25,13 +49,65 @@
             <Button
                 x:Name="addButton"
                 x:Uid="MultipleFilesPanel_AddButton"
+                Margin="8"
                 Click="AddButton_Click"
                 Content="Add" />
+            <Button
+                x:Name="removeButton"
+                x:Uid="MultipleFilesPanel_RemoveButton"
+                Margin="8"
+                Click="RemoveButton_Click"
+                Content="Remove Selected"
+                Visibility="Collapsed" />
         </StackPanel>
+        <TextBlock
+            x:Name="DropHint"
+            x:Uid="MultipleFilesPanel_DropHint"
+            Grid.Row="1"
+            VerticalAlignment="Center"
+            Text="Drop files or folders here"
+            TextAlignment="Center" />
         <ListView
             x:Name="fileList"
             Grid.Row="1"
+            MinHeight="200"
+            AllowDrop="True"
+            DragOver="FileList_DragOver"
+            Drop="FileList_Drop"
+            ItemContainerStyle="{StaticResource FileListItemStyle}"
             ItemTemplate="{StaticResource StorageFileDisplayItem}"
-            ItemsSource="{Binding}" />
+            ItemsSource="{Binding}"
+            SelectionChanged="FileList_SelectionChanged"
+            SelectionMode="Extended" />
+        <toolkit:Loading
+            x:Name="loadingControl"
+            Grid.RowSpan="2"
+            Background="{ThemeResource SystemControlBackgroundAltMediumBrush}"
+            IsLoading="False">
+            <ContentControl x:Name="loadingContentControl">
+                <ProgressRing
+                    Width="50"
+                    Height="50"
+                    IsActive="True" />
+            </ContentControl>
+        </toolkit:Loading>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="noFileState" />
+                <VisualState x:Name="haveFileState">
+                    <VisualState.Setters>
+                        <Setter Target="DropHint.(UIElement.Visibility)" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup>
+                <VisualState x:Name="noSelectionState" />
+                <VisualState x:Name="haveSelectionState">
+                    <VisualState.Setters>
+                        <Setter Target="removeButton.(UIElement.Visibility)" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </UserControl>

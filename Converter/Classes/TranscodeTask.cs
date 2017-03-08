@@ -30,8 +30,32 @@ namespace Converter.Classes
         private TranscodeConfiguration config;
         private PrepareTranscodeResult prepareResult;
 
+        /// <summary>
+        /// 创建TranscodeTask实例。
+        /// </summary>
+        /// <param name="source">转码任务的输入文件（不能为null）</param>
+        /// <param name="destination">转码任务的输出文件（不能为null）</param>
+        /// <param name="config">转码任务的配置（不能为null）</param>
+        /// <exception cref="ArgumentNullException">
+        /// 当任意参数为null时引发异常。
+        /// </exception>
         public TranscodeTask(StorageFile source, StorageFile destination, TranscodeConfiguration config)
         {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            if (destination == null)
+            {
+                throw new ArgumentNullException(nameof(destination));
+            }
+
+            if (config == null)
+            {
+                throw new ArgumentNullException(nameof(config));
+            }
+
             this.source = source;
             this.destination = destination;
             outputFileName = this.destination.Name;
@@ -40,47 +64,89 @@ namespace Converter.Classes
             _progress = 0;
         }
 
+        /// <summary>
+        /// 调用此方法以准备转码。
+        /// 当状态为Created时可以调用此方法。调用后进入Preparing状态。
+        /// 若可以转码，则进入ReadyToStart状态并将文件名改为临时文件，否则进入Error状态。
+        /// </summary>
+        /// <exception cref="InvalidOperationException">
+        /// 当状态部位Created时调用此方法引发异常。
+        /// </exception>
+        /// <returns>无返回值，可等待。</returns>
         public async Task PrepareAsync()
         {
             if (Status != TranscodeStatus.Created)
             {
-                return;
+                throw new InvalidOperationException();
             }
             else
             {
                 Status = TranscodeStatus.Preparing;
             }
 
-            var sourceProfile = await MediaEncodingProfile.CreateFromFileAsync(source);
-            var destProfile = config.Profile(sourceProfile);
-
-            prepareResult = await transcoder.PrepareFileTranscodeAsync(source, destination, destProfile);
-
-            if (prepareResult.CanTranscode)
+            try
             {
-                Status = TranscodeStatus.ReadyToStart;
-                await destination.RenameAsync(destination.Name + ".transcodetmp", NameCollisionOption.GenerateUniqueName);
+                var sourceProfile = await MediaEncodingProfile.CreateFromFileAsync(source);
+                var destProfile = config.Profile(sourceProfile);
+
+                prepareResult = await transcoder.PrepareFileTranscodeAsync(source, destination, destProfile);
+
+                if (prepareResult.CanTranscode)
+                {
+                    Status = TranscodeStatus.ReadyToStart;
+                    await destination.RenameAsync(destination.Name + ".transcodetmp", NameCollisionOption.GenerateUniqueName);
+                }
+                else
+                {
+                    Status = TranscodeStatus.Error;
+                }
             }
-            else
+            catch (Exception)
             {
                 Status = TranscodeStatus.Error;
             }
         }
 
-        public async void StartTranscode()
+        /// <summary>
+        /// 状态为ReadyStart时可调用，调用后进入InProgress状态。
+        /// </summary>
+        /// <exception cref="InvalidOperationException">
+        /// 若调用时状态不为ReadyToStart，则引发异常。
+        /// </exception>
+        public void StartTranscode()
         {
-            if (prepareResult == null)
+            if (prepareResult == null || Status != TranscodeStatus.ReadyToStart)
             {
-                await PrepareAsync();
+                throw new InvalidOperationException();
+            }
+
+            Status = TranscodeStatus.InProgress;
+            var transcodeTask = prepareResult.TranscodeAsync();
+            transcodeTask.Progress += TranscodeTask_ProgressChanged;
+            transcodeTask.Completed += TranscodeTask_Completed;
+        }
+
+        /// <summary>
+        /// 删除目标文件并将状态调整为Cancelled。
+        /// </summary>
+        /// <returns>
+        /// 无返回值，可等待。
+        /// </returns>
+        public async Task DeleteDestinationFileAsync()
+        {
+            while (Status == TranscodeStatus.Preparing)
+            {
+                await Task.Delay(200);
             }
 
             if (Status == TranscodeStatus.ReadyToStart)
             {
-                Status = TranscodeStatus.InProgress;
-                var transcodeTask = prepareResult.TranscodeAsync();
-                transcodeTask.Progress += TranscodeTask_ProgressChanged;
-                transcodeTask.Completed += TranscodeTask_Completed;
+                var result = prepareResult.TranscodeAsync();
+                result.Cancel();
             }
+
+            Status = TranscodeStatus.Cancelled;
+            await destination.DeleteAsync(StorageDeleteOption.PermanentDelete);
         }
 
         private async void TranscodeTask_ProgressChanged(IAsyncActionWithProgress<double> sender, double progress)

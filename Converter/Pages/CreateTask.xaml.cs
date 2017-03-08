@@ -55,6 +55,7 @@ namespace Converter.Pages
 
         private async void SubmitButtion_Click(object sender, RoutedEventArgs e)
         {
+            loadingControl.IsLoading = true;
             var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
             try
             {
@@ -93,6 +94,10 @@ namespace Converter.Pages
             {
                 MessageDialog dialog = new MessageDialog(ex.Message, loader.GetString(CreationFailed));
                 var result = dialog.ShowAsync();
+            }
+            finally
+            {
+                loadingControl.IsLoading = false;
             }
         }
 
