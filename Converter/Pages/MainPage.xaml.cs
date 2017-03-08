@@ -29,7 +29,7 @@ namespace Converter
         {
             this.InitializeComponent();
 
-            taskListView.DataContext = TranscodingManager.Tasks;
+            taskListView.DataContext = TranscodingManager.Current.Tasks;
         }
 
         private void CreateTaskButton_Click(object sender, RoutedEventArgs e)
