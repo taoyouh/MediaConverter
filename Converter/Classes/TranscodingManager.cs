@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -6,11 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.ExtendedExecution;
+using Windows.ApplicationModel.Resources;
+using Windows.UI.Notifications;
+using Windows.UI.Xaml;
 
 namespace Converter.Classes
 {
     internal class TranscodingManager
     {
+        private const string TasksFinished = "TranscodingManager_TasksFinished";
+        private const string SessionDescription = "TranscodingManager_SessionDescription";
+        private const string ExtendedExecutionRevoked = "TranscodingManager_ExtendedExecutionRevoked";
+
         private static TranscodingManager _current;
 
         public static TranscodingManager Current
@@ -30,6 +38,8 @@ namespace Converter.Classes
         {
             Tasks.CollectionChanged += Tasks_CollectionChanged;
         }
+
+        public bool ToastNotificationsEnabled { get; set; }
 
         private void Tasks_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -51,11 +61,11 @@ namespace Converter.Classes
 
             if (Tasks.All(x => x.Status != TranscodeTask.TranscodeStatus.InProgress))
             {
-                DisposeExtendedExecutionSession();
+                AllTasksFinished();
             }
             else
             {
-                RequestExtentedExecution();
+                TaskStarted();
             }
         }
 
@@ -64,11 +74,11 @@ namespace Converter.Classes
             if (e.PropertyName == nameof(TranscodeTask.Status)
                 && Tasks.All(x => x.Status != TranscodeTask.TranscodeStatus.InProgress))
             {
-                DisposeExtendedExecutionSession();
+                AllTasksFinished();
             }
             else
             {
-                RequestExtentedExecution();
+                TaskStarted();
             }
 
             if (e.PropertyName == nameof(TranscodeTask.Progress)
@@ -83,18 +93,19 @@ namespace Converter.Classes
 
         private static ExtendedExecutionSession extendedExeSession;
 
-        private async void RequestExtentedExecution()
+        private async void TaskStarted()
         {
             if (extendedExeSession == null)
             {
                 extendedExeSession = new ExtendedExecutionSession();
                 extendedExeSession.Reason = ExtendedExecutionReason.Unspecified;
-                extendedExeSession.Description = "后台格式转换";
+                extendedExeSession.Description = new ResourceLoader().GetString(SessionDescription);
 
                 var extendedExeResult = await extendedExeSession.RequestExtensionAsync();
                 switch (extendedExeResult)
                 {
                     case ExtendedExecutionResult.Allowed:
+                        extendedExeSession.Revoked += ExtendedExeSession_Revoked;
                         break;
                     case ExtendedExecutionResult.Denied:
                         extendedExeSession.Dispose();
@@ -104,13 +115,51 @@ namespace Converter.Classes
             }
         }
 
-        private void DisposeExtendedExecutionSession()
+        private void ExtendedExeSession_Revoked(object sender, ExtendedExecutionRevokedEventArgs args)
         {
+            if (args.Reason == ExtendedExecutionRevokedReason.SystemPolicy)
+            {
+                PopToastIfEnabled(new ResourceLoader().GetString(ExtendedExecutionRevoked));
+            }
+        }
+
+        private void AllTasksFinished()
+        {
+            PopToastIfEnabled(new ResourceLoader().GetString(TasksFinished));
+
             if (extendedExeSession != null)
             {
+                extendedExeSession.Revoked -= ExtendedExeSession_Revoked;
                 extendedExeSession.Dispose();
                 extendedExeSession = null;
             }
+        }
+
+        private void PopToastIfEnabled(string message)
+        {
+            if (!ToastNotificationsEnabled)
+            {
+                return;
+            }
+
+            ToastContent toastContent = new ToastContent()
+            {
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children =
+                        {
+                            new AdaptiveText()
+                            {
+                                Text = message
+                            }
+                        }
+                    }
+                }
+            };
+            ToastNotificationManager.CreateToastNotifier().
+                Show(new ToastNotification(toastContent.GetXml()));
         }
     }
 }
