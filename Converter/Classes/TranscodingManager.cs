@@ -18,6 +18,7 @@ namespace Converter.Classes
         private const string TasksFinished = "TranscodingManager_TasksFinished";
         private const string SessionDescription = "TranscodingManager_SessionDescription";
         private const string ExtendedExecutionRevoked = "TranscodingManager_ExtendedExecutionRevoked";
+        private const string TranscodingManagerNotificationGroup = "Mgr";
 
         private static TranscodingManager _current;
 
@@ -39,7 +40,30 @@ namespace Converter.Classes
             Tasks.CollectionChanged += Tasks_CollectionChanged;
         }
 
-        public bool ToastNotificationsEnabled { get; set; }
+        private bool _toastNotificationsEnabled;
+
+        public bool ToastNotificationsEnabled
+        {
+            get
+            {
+                return _toastNotificationsEnabled;
+            }
+
+            set
+            {
+                if (value == _toastNotificationsEnabled)
+                {
+                    return;
+                }
+
+                if (!value)
+                {
+                    ToastNotificationManager.History.RemoveGroup(TranscodingManagerNotificationGroup);
+                }
+
+                _toastNotificationsEnabled = value;
+            }
+        }
 
         private void Tasks_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -158,8 +182,11 @@ namespace Converter.Classes
                     }
                 }
             };
-            ToastNotificationManager.CreateToastNotifier().
-                Show(new ToastNotification(toastContent.GetXml()));
+            var notification = new ToastNotification(toastContent.GetXml())
+            {
+                Group = TranscodingManagerNotificationGroup
+            };
+            ToastNotificationManager.CreateToastNotifier().Show(notification);
         }
     }
 }
