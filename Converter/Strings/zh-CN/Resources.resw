@@ -261,4 +261,13 @@
   <data name="TranscodeStatus_Unknown" xml:space="preserve">
     <value>未知状态</value>
   </data>
+  <data name="TranscodingManager_ExtendedExecutionRevoked" xml:space="preserve">
+    <value>转换任务已被系统暂停，请点击此处启动应用并继续</value>
+  </data>
+  <data name="TranscodingManager_SessionDescription" xml:space="preserve">
+    <value>进行格式转换操作</value>
+  </data>
+  <data name="TranscodingManager_TasksFinished" xml:space="preserve">
+    <value>所有任务已完成</value>
+  </data>
 </root>
