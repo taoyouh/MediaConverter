@@ -1,0 +1,131 @@
+﻿<Page
+    x:Class="Converter.Pages.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Converter.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <DrillInNavigationTransitionInfo />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <TextBlock
+                x:Name="TitleBlock"
+                x:Uid="AboutPage_TitleBlock"
+                Margin="12"
+                VerticalAlignment="Top"
+                FontSize="{ThemeResource HubHeaderThemeFontSize}"
+                Text="About"
+                TextWrapping="WrapWholeWords" />
+        </Grid>
+        <Grid Grid.Row="1" Margin="6,6,6,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                x:Name="appTitleBlock"
+                Grid.ColumnSpan="2"
+                Margin="6"
+                FontSize="{ThemeResource TextStyleExtraLargeFontSize}"
+                Text="[title]"
+                TextWrapping="WrapWholeWords" />
+
+            <TextBlock
+                x:Uid="AboutPage_VersionHint"
+                Grid.Row="1"
+                Margin="6"
+                Text="Version" />
+            <TextBlock
+                x:Name="versionBlock"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="6"
+                Text="[version]"
+                TextWrapping="WrapWholeWords" />
+
+            <TextBlock
+                x:Uid="AboutPage_PublisherHint"
+                Grid.Row="2"
+                Margin="6"
+                Text="Publisher" />
+            <TextBlock
+                x:Name="publisherBlock"
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="6"
+                Text="[publisher]"
+                TextWrapping="WrapWholeWords" />
+
+            <TextBlock
+                x:Uid="AboutPage_InstalledDateHint"
+                Grid.Row="3"
+                Margin="6"
+                Text="Installed Date" />
+            <TextBlock
+                x:Name="installedDateBlock"
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="6"
+                Text="[installedDate]" />
+
+            <TextBlock
+                x:Uid="AboutPage_EmailHint"
+                Grid.Row="4"
+                Margin="6"
+                Text="Email" />
+            <HyperlinkButton
+                x:Name="emailButton"
+                Grid.Row="4"
+                Grid.Column="1"
+                Margin="6,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top">
+                <TextBlock
+                    x:Name="emailBlock"
+                    Text="[email]"
+                    TextWrapping="Wrap" />
+            </HyperlinkButton>
+
+            <HyperlinkButton
+                x:Name="feedbackCenterButton"
+                x:Uid="AboutPage_FeedbackCenterButton"
+                Grid.Row="5"
+                Grid.ColumnSpan="2"
+                Margin="6,0"
+                Click="FeedbackCenterButton_Click"
+                Content="Feedback Center" />
+
+            <HyperlinkButton
+                x:Name="reviewButton"
+                x:Uid="AboutPage_ReviewButton"
+                Grid.Row="6"
+                Grid.ColumnSpan="2"
+                Margin="6,0"
+                Content="Rate and Review" />
+        </Grid>
+    </Grid>
+</Page>
