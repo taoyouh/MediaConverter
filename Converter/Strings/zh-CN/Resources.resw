@@ -138,6 +138,9 @@
   <data name="AboutPage_VersionHint.Text" xml:space="preserve">
     <value>版本</value>
   </data>
+  <data name="AboutPage_ViewOnGitHubButton.Content" xml:space="preserve">
+    <value>在GitHub上查看</value>
+  </data>
   <data name="AppTitle" xml:space="preserve">
     <value>格式转换</value>
   </data>

@@ -22,6 +22,7 @@ namespace Converter.Pages
     {
         private const string Email = "zhaobang.china@hotmail.com";
         private const string AppId = "9ndjv6k3g2tj";
+        private const string GitHubUri = "https://github.com/ZhaobangChina/MediaConverter";
 
         public AboutPage()
         {
@@ -43,11 +44,14 @@ namespace Converter.Pages
                 Visibility.Visible : Visibility.Collapsed;
 
             reviewButton.NavigateUri = new Uri($"ms-windows-store://review/?ProductId={AppId}");
+
+            viewOnGitHubButton.NavigateUri = new Uri(GitHubUri);
         }
 
-        private async void FeedbackCenterButton_Click(object sender, RoutedEventArgs e)
+        private void FeedbackCenterButton_Click(object sender, RoutedEventArgs e)
         {
-            await Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.GetDefault().LaunchAsync();
+            var result =
+                Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.GetDefault().LaunchAsync();
         }
     }
 }

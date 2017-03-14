@@ -45,6 +45,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock
                 x:Name="appTitleBlock"
@@ -126,6 +127,14 @@
                 Grid.ColumnSpan="2"
                 Margin="6,0"
                 Content="Rate and Review" />
+
+            <HyperlinkButton
+                x:Name="viewOnGitHubButton"
+                x:Uid="AboutPage_ViewOnGitHubButton"
+                Grid.Row="7"
+                Grid.ColumnSpan="2"
+                Margin="6,0"
+                Content="View on GitHub" />
         </Grid>
     </Grid>
 </Page>
