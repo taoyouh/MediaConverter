@@ -46,6 +46,12 @@
                 Margin="8"
                 Click="CreateMultipleButton_Click"
                 Content="Create Multiple Tasks" />
+            <Button
+                x:Name="aboutButton"
+                x:Uid="MainPage_AboutButton"
+                Margin="8"
+                Click="AboutButton_Click"
+                Content="About" />
         </StackPanel>
         <ListView
             x:Name="taskListView"

@@ -41,5 +41,10 @@ namespace Converter
         {
             Frame.Navigate(typeof(Pages.CreateMultipleTasks));
         }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Pages.AboutPage));
+        }
     }
 }
