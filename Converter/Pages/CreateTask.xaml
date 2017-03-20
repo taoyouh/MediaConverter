@@ -25,6 +25,14 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <TextBlock
+            x:Name="TitleBlock"
+            x:Uid="CreateTask_TitleBlock"
+            Margin="12"
+            VerticalAlignment="Top"
+            FontSize="{ThemeResource HubHeaderThemeFontSize}"
+            Text="CreateTask"
+            TextWrapping="WrapWholeWords" />
         <ScrollViewer
             Grid.Row="1"
             HorizontalScrollMode="Disabled"
