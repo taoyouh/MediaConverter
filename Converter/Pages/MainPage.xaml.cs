@@ -29,7 +29,7 @@ namespace Converter
         {
             this.InitializeComponent();
 
-            taskListView.DataContext = TranscodingManager.Tasks;
+            taskListView.DataContext = TranscodingManager.Current.Tasks;
         }
 
         private void CreateTaskButton_Click(object sender, RoutedEventArgs e)
@@ -40,6 +40,11 @@ namespace Converter
         private void CreateMultipleButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Pages.CreateMultipleTasks));
+        }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Pages.AboutPage));
         }
     }
 }

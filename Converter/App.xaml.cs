@@ -35,6 +35,18 @@ namespace Converter
             this.Suspending += OnSuspending;
         }
 
+        private void Window_Activated(object sender, WindowActivatedEventArgs e)
+        {
+            if (e.WindowActivationState == CoreWindowActivationState.Deactivated)
+            {
+                Classes.TranscodingManager.Current.ToastNotificationsEnabled = true;
+            }
+            else
+            {
+                Classes.TranscodingManager.Current.ToastNotificationsEnabled = false;
+            }
+        }
+
         /// <summary>
         /// 在应用程序由最终用户正常启动时进行调用。
         /// 将在启动应用程序以打开特定文件等情况下使用。
@@ -46,6 +58,8 @@ namespace Converter
 
             if (!backHandled)
             {
+                Window.Current.Activated += Window_Activated;
+
                 Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(320, 500));
                 SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
                 backHandled = true;
