@@ -23,8 +23,6 @@ namespace Converter
     /// </summary>
     public sealed partial class App : Application
     {
-        private bool backHandled = false;
-
         /// <summary>
         /// 初始化<see cref="App"/>类的新实例。
         /// 这是执行的创作代码的第一行，执行时逻辑上等同于 main() 或 WinMain()。
@@ -35,18 +33,6 @@ namespace Converter
             this.Suspending += OnSuspending;
         }
 
-        private void Window_Activated(object sender, WindowActivatedEventArgs e)
-        {
-            if (e.WindowActivationState == CoreWindowActivationState.Deactivated)
-            {
-                Classes.TranscodingManager.Current.ToastNotificationsEnabled = true;
-            }
-            else
-            {
-                Classes.TranscodingManager.Current.ToastNotificationsEnabled = false;
-            }
-        }
-
         /// <summary>
         /// 在应用程序由最终用户正常启动时进行调用。
         /// 将在启动应用程序以打开特定文件等情况下使用。
@@ -55,15 +41,6 @@ namespace Converter
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
-
-            if (!backHandled)
-            {
-                Window.Current.Activated += Window_Activated;
-
-                Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(320, 500));
-                SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
-                backHandled = true;
-            }
 
             // 不要在窗口已包含内容时重复应用程序初始化，
             // 只需确保窗口处于活动状态
@@ -99,6 +76,20 @@ namespace Converter
             }
         }
 
+        /// <summary>
+        /// 将在创建窗口时调用。绑定Activated事件，设定窗口大小，以及绑定OnBackRequested事件
+        /// </summary>
+        /// <param name="args">有关创建的窗口的信息。</param>
+        protected override void OnWindowCreated(WindowCreatedEventArgs args)
+        {
+            Window.Current.Activated += Window_Activated;
+
+            Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(320, 500));
+            SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+
+            base.OnWindowCreated(args);
+        }
+
         private void OnNavigated(object sender, NavigationEventArgs e)
         {
             Frame frame = sender as Frame;
@@ -106,6 +97,18 @@ namespace Converter
                 frame.CanGoBack ?
                     AppViewBackButtonVisibility.Visible :
                     AppViewBackButtonVisibility.Collapsed;
+        }
+
+        private void Window_Activated(object sender, WindowActivatedEventArgs e)
+        {
+            if (e.WindowActivationState == CoreWindowActivationState.Deactivated)
+            {
+                Classes.TranscodingManager.Current.ToastNotificationsEnabled = true;
+            }
+            else
+            {
+                Classes.TranscodingManager.Current.ToastNotificationsEnabled = false;
+            }
         }
 
         private void OnBackRequested(object sender, BackRequestedEventArgs e)
