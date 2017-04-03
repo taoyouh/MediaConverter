@@ -9,18 +9,21 @@ namespace Converter.Classes
 {
     public class TranscodeConfiguration
     {
+        private const string Alac = "ALAC";
+        private const string Flac = "FLAC";
+
         public static TranscodeConfiguration CreateAlac()
         {
             var result = new TranscodeConfiguration()
             {
                 Audio = new AudioConfiguration()
                 {
-                    Subtype = "ALAC",
+                    Subtype = Alac,
                     Bitrate = 96
                 },
                 Container = new ContainerConfiguration()
                 {
-                    Subtype = "MPEG4"
+                    Subtype = MediaEncodingSubtypes.Mpeg4
                 }
             };
 
@@ -33,12 +36,12 @@ namespace Converter.Classes
             {
                 Audio = new AudioConfiguration()
                 {
-                    Subtype = "FLAC",
+                    Subtype = Flac,
                     Bitrate = 100
                 },
                 Container = new ContainerConfiguration()
                 {
-                    Subtype = "FLAC"
+                    Subtype = Flac
                 }
             };
 
@@ -51,11 +54,11 @@ namespace Converter.Classes
             {
                 Audio = new AudioConfiguration()
                 {
-                    Subtype = "AAC"
+                    Subtype = MediaEncodingSubtypes.Aac
                 },
                 Container = new ContainerConfiguration()
                 {
-                    Subtype = "MPEG4"
+                    Subtype = MediaEncodingSubtypes.Mpeg4
                 }
             };
 
@@ -68,11 +71,11 @@ namespace Converter.Classes
             {
                 Audio = new AudioConfiguration()
                 {
-                    Subtype = "MP3"
+                    Subtype = MediaEncodingSubtypes.Mp3
                 },
                 Container = new ContainerConfiguration()
                 {
-                    Subtype = "MP3"
+                    Subtype = MediaEncodingSubtypes.Mp3
                 }
             };
 
@@ -85,11 +88,11 @@ namespace Converter.Classes
             {
                 Audio = new AudioConfiguration()
                 {
-                    Subtype = "WMA9"
+                    Subtype = MediaEncodingSubtypes.Wma9
                 },
                 Container = new ContainerConfiguration()
                 {
-                    Subtype = "ASF"
+                    Subtype = MediaEncodingSubtypes.Asf
                 }
             };
 
@@ -102,15 +105,15 @@ namespace Converter.Classes
             {
                 Audio = new AudioConfiguration()
                 {
-                    Subtype = "AAC",
+                    Subtype = MediaEncodingSubtypes.Aac
                 },
                 Video = new VideoConfiguration()
                 {
-                    Subtype = "H264",
+                    Subtype = MediaEncodingSubtypes.H264
                 },
                 Container = new ContainerConfiguration()
                 {
-                    Subtype = "MPEG4"
+                    Subtype = MediaEncodingSubtypes.Mpeg4
                 }
             };
 
@@ -127,55 +130,57 @@ namespace Converter.Classes
         {
             string name;
             string[] fileTypes;
-            switch (Container?.Subtype?.ToUpper())
+
+            string containerSubType = Container?.Subtype;
+
+            if (containerSubType == Flac)
             {
-                case "FLAC":
-                    name = "FLAC";
-                    fileTypes = new string[] { ".flac" };
-                    break;
-                case "MPEG4":
-                    if (Video == null)
-                    {
-                        name = "MPEG4 Audio";
-                        fileTypes = new string[] { ".m4a", ".mp4" };
-                    }
-                    else
-                    {
-                        name = "MPEG4 Video";
-                        fileTypes = new string[] { ".mp4", ".m4v" };
-                    }
-
-                    break;
-                case "MP3":
-                    name = "MP3";
-                    fileTypes = new string[] { ".mp3" };
-                    break;
-                case "ASF":
-                    if (Video == null)
-                    {
-                        name = "Windows Media Audio";
-                        fileTypes = new string[] { ".wma", ".asf" };
-                    }
-                    else
-                    {
-                        name = "Windows Media Video";
-                        fileTypes = new string[] { ".wmv", ".asf" };
-                    }
-
-                    break;
-                default:
-                    if (Container == null)
-                    {
-                        name = "Unknown";
-                        fileTypes = new string[] { "." };
-                    }
-                    else
-                    {
-                        name = Container.Subtype;
-                        fileTypes = new string[] { "." + Container.Subtype.ToLower() };
-                    }
-
-                    break;
+                name = "FLAC";
+                fileTypes = new string[] { ".flac" };
+            }
+            else if (containerSubType == MediaEncodingSubtypes.Mpeg4)
+            {
+                if (Video == null)
+                {
+                    name = "MPEG4 Audio";
+                    fileTypes = new string[] { ".m4a", ".mp4" };
+                }
+                else
+                {
+                    name = "MPEG4 Video";
+                    fileTypes = new string[] { ".mp4", ".m4v" };
+                }
+            }
+            else if (containerSubType == MediaEncodingSubtypes.Mp3)
+            {
+                name = "MP3";
+                fileTypes = new string[] { ".mp3" };
+            }
+            else if (containerSubType == MediaEncodingSubtypes.Asf)
+            {
+                if (Video == null)
+                {
+                    name = "Windows Media Audio";
+                    fileTypes = new string[] { ".wma", ".asf" };
+                }
+                else
+                {
+                    name = "Windows Media Video";
+                    fileTypes = new string[] { ".wmv", ".asf" };
+                }
+            }
+            else
+            {
+                if (Container == null)
+                {
+                    name = "Unknown";
+                    fileTypes = new string[] { "." };
+                }
+                else
+                {
+                    name = Container.Subtype;
+                    fileTypes = new string[] { "." + Container.Subtype.ToLower() };
+                }
             }
 
             return new KeyValuePair<string, IList<string>>(name, fileTypes);
