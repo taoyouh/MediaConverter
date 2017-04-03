@@ -30,7 +30,6 @@ namespace Converter
         public App()
         {
             this.InitializeComponent();
-            this.Suspending += OnSuspending;
         }
 
         /// <summary>
@@ -40,40 +39,21 @@ namespace Converter
         /// <param name="e">有关启动请求和过程的详细信息。</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
-
-            // 不要在窗口已包含内容时重复应用程序初始化，
-            // 只需确保窗口处于活动状态
-            if (rootFrame == null)
+#if DEBUG
+            if (System.Diagnostics.Debugger.IsAttached)
             {
-                // 创建要充当导航上下文的框架，并导航到第一页
-                rootFrame = new Frame();
+                this.DebugSettings.EnableFrameRateCounter = true;
+            }
+#endif
 
-                rootFrame.NavigationFailed += OnNavigationFailed;
-                rootFrame.Navigated += OnNavigated;
-
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    // TODO: 从之前挂起的应用程序加载状态
-                }
-
-                // 将框架放在当前窗口中
-                Window.Current.Content = rootFrame;
+            if (e.PrelaunchActivated)
+            {
+                // 不处理预启动
+                return;
             }
 
-            if (e.PrelaunchActivated == false)
-            {
-                if (rootFrame.Content == null)
-                {
-                    // 当导航堆栈尚未还原时，导航到第一页，
-                    // 并通过将所需信息作为导航参数传入来配置
-                    // 参数
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                }
-
-                // 确保当前窗口处于活动状态
-                Window.Current.Activate();
-            }
+            // 若应用已经启动，则不强制导航到MainPage
+            CreateRootFrameAndNavigate(typeof(MainPage), null, false);
         }
 
         /// <summary>
@@ -86,8 +66,28 @@ namespace Converter
 
             Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(320, 500));
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+        }
 
-            base.OnWindowCreated(args);
+        private void CreateRootFrameAndNavigate(Type page, object parameter, bool forceNavigate)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            // 若不存在rootFrame，则创建一个rootFrame
+            if (rootFrame == null)
+            {
+                rootFrame = new Frame();
+                rootFrame.Navigated += OnNavigated;
+                rootFrame.NavigationFailed += OnNavigationFailed;
+                Window.Current.Content = rootFrame;
+            }
+
+            // 若rootFrame是新创建的，或是强制要求导航到页面，则导航到指定的页面
+            if (rootFrame.Content == null || forceNavigate)
+            {
+                rootFrame.Navigate(page, parameter);
+            }
+
+            Window.Current.Activate();
         }
 
         private void OnNavigated(object sender, NavigationEventArgs e)
@@ -133,21 +133,6 @@ namespace Converter
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
-        }
-
-        /// <summary>
-        /// 在将要挂起应用程序执行时调用。  在不知道应用程序
-        /// 无需知道应用程序会被终止还是会恢复，
-        /// 并让内存内容保持不变。
-        /// </summary>
-        /// <param name="sender">挂起的请求的源。</param>
-        /// <param name="e">有关挂起请求的详细信息。</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
-        {
-            var deferral = e.SuspendingOperation.GetDeferral();
-
-            // TODO: 保存应用程序状态并停止任何后台活动
-            deferral.Complete();
         }
     }
 }
