@@ -104,14 +104,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\AudioConfiguration.cs" />
-    <Compile Include="Classes\ContainerConfiguration.cs" />
     <Compile Include="Classes\SupportedFormats.cs" />
-    <Compile Include="Classes\TranscodeConfiguration.cs" />
-    <Compile Include="Classes\MediaEncodingProfileHelper.cs" />
-    <Compile Include="Classes\TranscodeTask.cs" />
     <Compile Include="Classes\TranscodingManager.cs" />
-    <Compile Include="Classes\VideoConfiguration.cs" />
     <Compile Include="Controls\FileBrowseControl.xaml.cs">
       <DependentUpon>FileBrowseControl.xaml</DependentUpon>
     </Compile>
@@ -223,6 +217,7 @@
       <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
     </SDKReference>
   </ItemGroup>
+  <Import Project="..\Converter.Classes\Converter.Classes.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
