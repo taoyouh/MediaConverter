@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>a848cf8e-6a2e-4990-8375-83abb2d15dbd</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Converter.Classes</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AudioConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ContainerConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MediaEncodingProfileHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TranscodeConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TranscodeTask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)VideoConfiguration.cs" />
+  </ItemGroup>
+</Project>
