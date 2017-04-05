@@ -42,11 +42,16 @@ namespace ConverterUnitTest
             AssertConfigSubtypeMatch(wma, originalWma);
         }
 
-        private void AssertConfigSubtypeMatch(TranscodeConfiguration config, MediaEncodingProfile profile)
+        private static void AssertConfigSubtypeMatch(TranscodeConfiguration config, MediaEncodingProfile profile)
         {
-            Assert.AreEqual(config.Container.Subtype, profile.Container.Subtype);
-            Assert.AreEqual(config.Audio?.Subtype, profile.Audio?.Subtype);
-            Assert.AreEqual(config.Video?.Subtype, profile.Video?.Subtype);
+            AssertStringCaseInsensitive(profile.Container.Subtype, config.Container.Subtype);
+            AssertStringCaseInsensitive(profile.Audio?.Subtype, config.Audio?.Subtype);
+            AssertStringCaseInsensitive(profile.Video?.Subtype, config.Video?.Subtype);
+        }
+
+        private static void AssertStringCaseInsensitive(string expected, string actual)
+        {
+            Assert.AreEqual(expected?.ToUpperInvariant(), actual?.ToUpperInvariant());
         }
     }
 }
