@@ -8,6 +8,57 @@ using System.Threading.Tasks;
 namespace ConverterUnitTest
 {
     [TestClass]
+    public class TranscodeTestFromFlac
+    {
+        StorageFile inputFile;
+        StorageFile outputFile;
+
+        [TestInitialize]
+        public async Task TaskInit()
+        {
+            inputFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///TestMedia/Flac.flac"));
+            var folder = ApplicationData.Current.TemporaryFolder;
+            outputFile = await folder.CreateFileAsync("new.test", CreationCollisionOption.GenerateUniqueName);
+        }
+
+        [TestMethod]
+        public async Task FlacToAac()
+        {
+            var config = TranscodeConfiguration.CreateAac();
+            await TestTranscodingAsync(config);
+        }
+
+        [TestMethod]
+        public async Task FlacToAlac()
+        {
+            var config = TranscodeConfiguration.CreateAlac();
+            await TestTranscodingAsync(config);
+        }
+
+        [TestMethod]
+        public async Task FlacToMp3()
+        {
+            var config = TranscodeConfiguration.CreateMp3();
+            await TestTranscodingAsync(config);
+        }
+
+        [TestMethod]
+        public async Task FlacToWma()
+        {
+            var config = TranscodeConfiguration.CreateWma();
+            await TestTranscodingAsync(config);
+        }
+
+        public async Task TestTranscodingAsync(TranscodeConfiguration config)
+        {
+            var transcodeTask = new TranscodeTask(inputFile, outputFile, config);
+            await transcodeTask.PrepareAsync();
+            Assert.AreEqual(TranscodeTask.TranscodeStatus.ReadyToStart, transcodeTask.Status);
+            transcodeTask.StartTranscode();
+        }
+    }
+
+    [TestClass]
     public class ConfigsSubtypeMatch
     {
         [TestMethod]
