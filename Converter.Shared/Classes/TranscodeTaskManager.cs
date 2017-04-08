@@ -10,32 +10,33 @@ using Windows.ApplicationModel.ExtendedExecution;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
+using static Converter.Classes.TranscodeTask;
 
 namespace Converter.Classes
 {
-    internal class TranscodingManager
+    internal class TranscodeTaskManager
     {
         private const string TasksFinished = "TranscodingManager_TasksFinished";
         private const string SessionDescription = "TranscodingManager_SessionDescription";
         private const string ExtendedExecutionRevoked = "TranscodingManager_ExtendedExecutionRevoked";
         private const string TranscodingManagerNotificationGroup = "Mgr";
 
-        private static TranscodingManager _current;
+        private static TranscodeTaskManager _current;
 
-        public static TranscodingManager Current
+        public static TranscodeTaskManager Current
         {
             get
             {
                 if (_current == null)
                 {
-                    _current = new TranscodingManager();
+                    _current = new TranscodeTaskManager();
                 }
 
                 return _current;
             }
         }
 
-        public TranscodingManager()
+        public TranscodeTaskManager()
         {
             Tasks.CollectionChanged += Tasks_CollectionChanged;
         }
@@ -71,7 +72,7 @@ namespace Converter.Classes
             {
                 foreach (TranscodeTask item in e.OldItems)
                 {
-                    item.PropertyChanged -= Task_PropertyChanged;
+                    item.StatusChanged -= TranscodeTask_StatusChanged;
                 }
             }
 
@@ -79,11 +80,11 @@ namespace Converter.Classes
             {
                 foreach (TranscodeTask item in e.NewItems)
                 {
-                    item.PropertyChanged += Task_PropertyChanged;
+                    item.StatusChanged += TranscodeTask_StatusChanged;
                 }
             }
 
-            if (Tasks.All(x => x.Status != TranscodeTask.TranscodeStatus.InProgress))
+            if (Tasks.All(x => x.Status != TranscodeStatus.InProgress))
             {
                 AllTasksFinished();
             }
@@ -93,22 +94,15 @@ namespace Converter.Classes
             }
         }
 
-        private void Task_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void TranscodeTask_StatusChanged(object sender, TranscodeStatus e)
         {
-            if (e.PropertyName == nameof(TranscodeTask.Status)
-                && Tasks.All(x => x.Status != TranscodeTask.TranscodeStatus.InProgress))
+            if (Tasks.All(x => x.Status != TranscodeStatus.InProgress))
             {
                 AllTasksFinished();
             }
             else
             {
                 TaskStarted();
-            }
-
-            if (e.PropertyName == nameof(TranscodeTask.Progress)
-                && extendedExeSession != null)
-            {
-                extendedExeSession.PercentProgress = (uint)Tasks.Average(x => x.Progress);
             }
         }
 

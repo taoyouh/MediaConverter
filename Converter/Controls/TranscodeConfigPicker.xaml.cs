@@ -64,7 +64,7 @@ namespace Converter.Controls
         private void TranscodeConfigComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _selectedConfiguration =
-                (transcodeConfigComboBox.SelectedItem as TranscodeConfigListItem)?.
+                (transcodeConfigComboBox.SelectedItem as TranscodeConfigViewModel)?.
                     Configuration;
             SelectedFormatChanged?.Invoke(this, new EventArgs());
             AudioPanel.Visibility = _selectedConfiguration?.Audio == null ?

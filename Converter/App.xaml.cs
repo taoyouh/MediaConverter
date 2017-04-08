@@ -103,11 +103,11 @@ namespace Converter
         {
             if (e.WindowActivationState == CoreWindowActivationState.Deactivated)
             {
-                Classes.TranscodingManager.Current.ToastNotificationsEnabled = true;
+                Classes.TranscodeTaskManager.Current.ToastNotificationsEnabled = true;
             }
             else
             {
-                Classes.TranscodingManager.Current.ToastNotificationsEnabled = false;
+                Classes.TranscodeTaskManager.Current.ToastNotificationsEnabled = false;
             }
         }
 
