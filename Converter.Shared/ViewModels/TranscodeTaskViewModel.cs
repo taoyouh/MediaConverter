@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Converter.Classes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -12,7 +13,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using static Converter.Classes.TranscodeTask;
 
-namespace Converter.Classes
+namespace Converter.ViewModels
 {
     public class TranscodeTaskViewModel : DependencyObject, INotifyPropertyChanged
     {

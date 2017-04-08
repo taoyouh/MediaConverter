@@ -20,7 +20,6 @@ namespace Converter.Classes
         private double _progress;
         private TranscodeStatus _status;
 
-
         /// <summary>
         /// 创建TranscodeTask实例。
         /// </summary>

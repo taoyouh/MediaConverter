@@ -66,7 +66,7 @@ namespace Converter.ViewModels
             {
                 foreach (TranscodeTask item in e.NewItems)
                 {
-                    taskViewModels.Add(new Classes.TranscodeTaskViewModel(item));
+                    taskViewModels.Add(new TranscodeTaskViewModel(item));
                 }
             }
         }
