@@ -8,12 +8,4 @@
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>Converter.Classes</Import_RootNamespace>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)AudioConfiguration.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ContainerConfiguration.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MediaEncodingProfileHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TranscodeConfiguration.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TranscodeTask.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)VideoConfiguration.cs" />
-  </ItemGroup>
 </Project>

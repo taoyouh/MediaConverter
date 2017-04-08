@@ -11,7 +11,7 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <DataTemplate x:Key="TranscodeConfigItemTemplate" x:DataType="vm:TranscodeConfigListItem">
+        <DataTemplate x:Key="TranscodeConfigItemTemplate" x:DataType="vm:TranscodeConfigViewModel">
             <TextBlock Text="{x:Bind DisplayName}" />
         </DataTemplate>
     </UserControl.Resources>
