@@ -5,21 +5,16 @@ branches:
   - dev
 skip_branch_with_pr: true
 image: Visual Studio 2015
-configuration: Release
-platform:
-- x86
-- x64
-- ARM
 build_script:
 - ps: >-
     $projectPath = $APPVEYOR_BUILD_FOLDER + "\Converter\Converter.csproj"
 
-    $destination = $APPVEYOR_BUILD_FOLDER + "\Build\AppxPackages
+    $destination = $APPVEYOR_BUILD_FOLDER + "\Build\AppxPackages"
 
 
     nuget restore
 
-    msbuild $projectPath /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="destination" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="release" /p:VisualStudioVersion="14.0"
+    msbuild $projectPath /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir=$destination /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="release" /p:VisualStudioVersion="14.0"
 artifacts:
 - path: '\Build\AppxPackages'
   name: AppxPackages
