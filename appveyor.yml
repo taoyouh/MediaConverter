@@ -5,12 +5,18 @@ branches:
   - dev
 skip_branch_with_pr: true
 image: Visual Studio 2015
-configuration: Release
-platform:
-- x86
-- x64
-- ARM
-before_build:
-- cmd: nuget restore
-build:
-  verbosity: minimal
+build_script:
+- ps: >-
+    $projectPath = $env:APPVEYOR_BUILD_FOLDER + "\Converter\Converter.csproj"
+
+    $destination = $env:APPVEYOR_BUILD_FOLDER + "\Build\AppxPackages"
+
+
+    nuget restore
+
+    msbuild $projectPath /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir=$destination /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="release" /p:VisualStudioVersion="14.0"
+artifacts:
+- path: '\Build\AppxPackages'
+  name: AppxPackages
+- path: '\StoreMetadata'
+  name: Meta
