@@ -7,13 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converter", "Converter\Conv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConverterUnitTest", "ConverterUnitTest\ConverterUnitTest.csproj", "{D23952E3-4942-4796-BF82-EFD324800186}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Converter.Classes", "Converter.Classes\Converter.Classes.shproj", "{A848CF8E-6A2E-4990-8375-83ABB2D15DBD}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Converter.Shared", "Converter.Shared\Converter.Shared.shproj", "{F22A5506-BE02-4812-ADA3-F44533223DE3}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Converter.Classes\Converter.Classes.projitems*{a848cf8e-6a2e-4990-8375-83abb2d15dbd}*SharedItemsImports = 13
-		Converter.Classes\Converter.Classes.projitems*{b39c7e50-8057-4b91-8306-8626c833c5a0}*SharedItemsImports = 4
-		Converter.Classes\Converter.Classes.projitems*{d23952e3-4942-4796-bf82-efd324800186}*SharedItemsImports = 4
+		Converter.Shared\Converter.Shared.projitems*{b39c7e50-8057-4b91-8306-8626c833c5a0}*SharedItemsImports = 4
+		Converter.Shared\Converter.Shared.projitems*{d23952e3-4942-4796-bf82-efd324800186}*SharedItemsImports = 4
+		Converter.Shared\Converter.Shared.projitems*{f22a5506-be02-4812-ada3-f44533223de3}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
