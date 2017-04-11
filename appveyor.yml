@@ -14,8 +14,6 @@ build_script:
 artifacts:
 - path: '\Build\AppxPackages'
   name: AppxPackages
-- path: '\Publish\SubmissionPackage'
-  name: SubmissionPackage
 deploy_script:
 - ps: >-
     if ($env:APPVEYOR_REPO_BRANCH -eq "publish-test")
