@@ -7,7 +7,7 @@ $outName = "Submission"
 
 $configPath = [System.IO.Path]::Combine($env:rootPath, "Publish\StoreBroker\SBConfig.json")
 $pdpRootPath = [System.IO.Path]::Combine($env:rootPath, "Publish\StoreBroker\Pdp\")
-$imageRootPath = [System.IO.Path]::Combine($env:rootPath, "PublishStoreBroker\Images\")
+$imageRootPath = [System.IO.Path]::Combine($env:rootPath, "Publish\StoreBroker\Images\")
 $appxPath = [System.IO.Path]::Combine($env:rootPath, "Build\AppxPackages\")
 
 $outPath = [System.IO.Path]::Combine($env:rootPath, "Publish\SubmissionPackage\")
