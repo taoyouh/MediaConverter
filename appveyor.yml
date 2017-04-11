@@ -22,3 +22,7 @@ deploy_script:
         .\Publish\AppVeyorInit.ps1
         .\Publish\PublishToStore.ps1
     }
+    else
+    {
+        Add-AppveyorCompilationMessage "Environment variable clientSecret is not set. " -Category Error 
+    }
