@@ -8,7 +8,7 @@ skip_branch_with_pr: true
 image: Visual Studio 2015
 environment:
   clientSecret:
-    secure: ExhH7vUl1alvsJas13hQH7zmirkSxuIHkPoBp0QGocTNMyVRIO9H5JhrlMa+r/EwKuDs0mauF+OJSWAPEVDBth/6jyas3A1tewdb/fQh/4o=
+    secure: u2MqrnmS+4jSw1IQjBViTCmrVJ5OUo8bvswGz3HcF4L+qX2ZPYNrPRSKfOpWMUvr
 build_script:
 - ps: .\Build\Build.ps1
 artifacts:
