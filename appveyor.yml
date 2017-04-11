@@ -22,7 +22,14 @@ deploy_script:
         {
             .\Publish\InstallStoreBroker.ps1
             .\Publish\AppVeyorInit.ps1
-            .\Publish\PublishToStore.ps1
+            try
+            {
+                .\Publish\PublishToStore.ps1
+            }
+            catch
+            {
+                Add-AppveyorCompilationMessage "Publishing to Store failed. " -Category Error
+            }
         }
         else
         {
