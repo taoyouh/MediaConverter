@@ -3,8 +3,7 @@ branches:
   only:
   - master
   - dev
-  - publish-test
-skip_branch_with_pr: true
+skip_branch_with_pr: false
 image: Visual Studio 2015
 environment:
   clientSecret:
@@ -16,13 +15,17 @@ artifacts:
   name: AppxPackages
 deploy_script:
 - ps: >-
-    if (($env:APPVEYOR_REPO_BRANCH -eq "publish-test") -and (-not [String]::IsNullOrEmpty($env:clientSecret)))
+    if ($env:APPVEYOR_REPO_BRANCH -eq "master")
     {
-        .\Publish\InstallStoreBroker.ps1
-        .\Publish\AppVeyorInit.ps1
-        .\Publish\PublishToStore.ps1
-    }
-    else
-    {
-        Add-AppveyorCompilationMessage "Environment variable clientSecret is not set. " -Category Error 
+        Add-AppveyorCompilationMessage "Publishing to Windows Store. " -Category Information
+        if (-not [String]::IsNullOrEmpty($env:clientSecret))
+        {
+            .\Publish\InstallStoreBroker.ps1
+            .\Publish\AppVeyorInit.ps1
+            .\Publish\PublishToStore.ps1
+        }
+        else
+        {
+            Add-AppveyorCompilationMessage "Environment variable clientSecret is not set. " -Category Error 
+        }
     }
