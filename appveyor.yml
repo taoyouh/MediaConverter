@@ -3,20 +3,36 @@ branches:
   only:
   - master
   - dev
-skip_branch_with_pr: true
+skip_branch_with_pr: false
 image: Visual Studio 2015
+environment:
+  clientSecret:
+    secure: u2MqrnmS+4jSw1IQjBViTCmrVJ5OUo8bvswGz3HcF4L+qX2ZPYNrPRSKfOpWMUvr
 build_script:
-- ps: >-
-    $projectPath = $env:APPVEYOR_BUILD_FOLDER + "\Converter\Converter.csproj"
-
-    $destination = $env:APPVEYOR_BUILD_FOLDER + "\Build\AppxPackages"
-
-
-    nuget restore
-
-    msbuild $projectPath /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir=$destination /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="release" /p:VisualStudioVersion="14.0"
+- ps: .\Build\Build.ps1
 artifacts:
 - path: '\Build\AppxPackages'
   name: AppxPackages
-- path: '\StoreMetadata'
-  name: Meta
+deploy_script:
+- ps: >-
+    if ($env:APPVEYOR_REPO_BRANCH -eq "master")
+    {
+        Add-AppveyorCompilationMessage "Publishing to Windows Store. " -Category Information
+        if (-not [String]::IsNullOrEmpty($env:clientSecret))
+        {
+            .\Publish\InstallStoreBroker.ps1
+            .\Publish\AppVeyorInit.ps1
+            try
+            {
+                .\Publish\PublishToStore.ps1
+            }
+            catch
+            {
+                Add-AppveyorCompilationMessage "Publishing to Store failed. " -Category Error
+            }
+        }
+        else
+        {
+            Add-AppveyorCompilationMessage "Environment variable clientSecret is not set. " -Category Error 
+        }
+    }
