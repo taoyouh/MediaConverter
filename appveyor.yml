@@ -16,7 +16,7 @@ artifacts:
   name: AppxPackages
 deploy_script:
 - ps: >-
-    if ($env:APPVEYOR_REPO_BRANCH -eq "publish-test")
+    if (($env:APPVEYOR_REPO_BRANCH -eq "publish-test") -and (-not [String]::IsNullOrEmpty($env:clientSecret)))
     {
         .\Publish\InstallStoreBroker.ps1
         .\Publish\AppVeyorInit.ps1
