@@ -5,12 +5,12 @@ $clientSecret = $env:clientSecret | ConvertTo-SecureString -AsPlainText -Force
 $appId = "9NDJV6K3G2TJ"
 $outName = "Submission"
 
-$configPath = $env:rootPath + "Publish\StoreBroker\SBConfig.json"
-$pdpRootPath = $env:rootPath + "Publish\StoreBroker\Pdp\"
-$imageRootPath = $env:rootPath + "PublishStoreBroker\Images\"
-$appxPath = $env:rootPath + "Build\AppxPackages\"
+$configPath = [System.IO.Path]::Combine($env:rootPath, "Publish\StoreBroker\SBConfig.json")
+$pdpRootPath = [System.IO.Path]::Combine($env:rootPath, "Publish\StoreBroker\Pdp\")
+$imageRootPath = [System.IO.Path]::Combine($env:rootPath, "PublishStoreBroker\Images\")
+$appxPath = [System.IO.Path]::Combine($env:rootPath, "Build\AppxPackages\")
 
-$outPath = $env:rootPath + "\Publish\SubmissionPackage"
+$outPath = [System.IO.Path]::Combine($env:rootPath, "Publish\SubmissionPackage\")
 
 "Initializing submission package path"
 if (Test-Path -Path $outPath)

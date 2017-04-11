@@ -1,5 +1,5 @@
-﻿$projectPath = $env:APPVEYOR_BUILD_FOLDER + "\Converter\Converter.csproj"
-$destination = $env:APPVEYOR_BUILD_FOLDER + "\Build\AppxPackages"
+﻿$projectPath = [System.IO.Path]::Combine($env:APPVEYOR_BUILD_FOLDER, "\Converter\Converter.csproj")
+$destination = [System.IO.Path]::Combine($env:APPVEYOR_BUILD_FOLDER, "\Build\AppxPackages")
 
 "nuget restore"
 nuget restore
