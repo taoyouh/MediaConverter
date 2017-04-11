@@ -3,20 +3,24 @@ branches:
   only:
   - master
   - dev
+  - publish-test
 skip_branch_with_pr: true
 image: Visual Studio 2015
+environment:
+  clientSecret:
+    secure: ExhH7vUl1alvsJas13hQH7zmirkSxuIHkPoBp0QGocTNMyVRIO9H5JhrlMa+r/EwKuDs0mauF+OJSWAPEVDBth/6jyas3A1tewdb/fQh/4o=
 build_script:
-- ps: >-
-    $projectPath = $env:APPVEYOR_BUILD_FOLDER + "\Converter\Converter.csproj"
-
-    $destination = $env:APPVEYOR_BUILD_FOLDER + "\Build\AppxPackages"
-
-
-    nuget restore
-
-    msbuild $projectPath /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir=$destination /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="release" /p:VisualStudioVersion="14.0"
+- ps: .\Build\Build.ps1
 artifacts:
 - path: '\Build\AppxPackages'
   name: AppxPackages
-- path: '\StoreMetadata'
-  name: Meta
+- path: '\Publish\SubmissionPackage'
+  name: SubmissionPackage
+deploy_script:
+- ps: >-
+    if ($env:APPVEYOR_REPO_BRANCH -eq "publish-test")
+    {
+        .\Publish\InstallStoreBroker.ps1
+        .\Publish\AppVeyorInit.ps1
+        .\Publish\PublishToStore.ps1
+    }
