@@ -25,25 +25,33 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <TextBlock
+            x:Name="TitleBlock"
+            x:Uid="CreateTask_TitleBlock"
+            Margin="12"
+            VerticalAlignment="Top"
+            FontSize="{ThemeResource HubHeaderThemeFontSize}"
+            Text="CreateTask"
+            TextWrapping="WrapWholeWords" />
         <ScrollViewer
             Grid.Row="1"
             HorizontalScrollMode="Disabled"
             VerticalScrollBarVisibility="Auto">
-            <StackPanel Margin="8" Orientation="Vertical">
+            <StackPanel Orientation="Vertical">
                 <controls:FileOpenControl
                     x:Name="inputFilePicker"
                     x:Uid="CreateTask_InputFilePicker"
-                    Margin="8"
+                    Margin="12"
                     Header="Input File"
                     SelectionChanged="InputFilePicker_SelectionChanged" />
                 <controls:TranscodeConfigPicker
                     x:Name="formatPicker"
-                    Margin="8"
+                    Margin="12"
                     SelectedFormatChanged="FormatPicker_SelectedConfigChanged" />
                 <controls:FileSaveControl
                     x:Name="outputFilePicker"
                     x:Uid="CreateTask_OutputFilePicker"
-                    Margin="8"
+                    Margin="12"
                     Header="Output File" />
             </StackPanel>
         </ScrollViewer>
@@ -51,7 +59,7 @@
             x:Name="submitButtion"
             x:Uid="CreateTask_SubmitButton"
             Grid.Row="2"
-            Margin="8"
+            Margin="12"
             Click="SubmitButtion_Click"
             Content="Create" />
         <toolkit:Loading
