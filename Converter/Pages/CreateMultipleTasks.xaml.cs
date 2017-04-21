@@ -120,7 +120,7 @@ namespace Converter.Pages
                     {
                         tasks.Remove(task);
                         task.StartTranscode();
-                        TranscodingManager.Current.Tasks.Add(task);
+                        TranscodeTaskManager.Current.Tasks.Add(task);
                     }
                     else
                     {

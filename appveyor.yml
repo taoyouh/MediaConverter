@@ -1,16 +1,38 @@
-version: 1.0.{build}
+version: Build {build}
 branches:
   only:
   - master
   - dev
-skip_branch_with_pr: true
+skip_branch_with_pr: false
 image: Visual Studio 2015
-configuration: Release
-platform:
-- x86
-- x64
-- ARM
-before_build:
-- cmd: nuget restore
-build:
-  verbosity: minimal
+environment:
+  clientSecret:
+    secure: u2MqrnmS+4jSw1IQjBViTCmrVJ5OUo8bvswGz3HcF4L+qX2ZPYNrPRSKfOpWMUvr
+build_script:
+- ps: .\Build\Build.ps1
+artifacts:
+- path: '\Build\AppxPackages'
+  name: AppxPackages
+deploy_script:
+- ps: >-
+    if ($env:APPVEYOR_REPO_BRANCH -eq "master")
+    {
+        Add-AppveyorCompilationMessage "Publishing to Windows Store. " -Category Information
+        if (-not [String]::IsNullOrEmpty($env:clientSecret))
+        {
+            .\Publish\InstallStoreBroker.ps1
+            .\Publish\AppVeyorInit.ps1
+            try
+            {
+                .\Publish\PublishToStore.ps1
+            }
+            catch
+            {
+                Add-AppveyorCompilationMessage "Publishing to Store failed. " -Category Error
+            }
+        }
+        else
+        {
+            Add-AppveyorCompilationMessage "Environment variable clientSecret is not set. " -Category Error 
+        }
+    }

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>f22a5506-be02-4812-ada3-f44533223de3</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Converter.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Classes\AudioConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Classes\ContainerConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Classes\MediaEncodingProfileHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Classes\SupportedFormats.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Classes\TranscodeConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Classes\TranscodeTask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Classes\TranscodeTaskManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Classes\VideoConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TranscodeConfigViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TranscodeTaskListViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TranscodeTaskViewModel.cs" />
+  </ItemGroup>
+</Project>

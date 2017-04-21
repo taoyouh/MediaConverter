@@ -20,3 +20,6 @@ Media Converter是一个可以转换媒体文件格式的UWP应用项目，应�
 
 dev分支在AppVeyor上的生成状态：
 [![Build status](https://ci.appveyor.com/api/projects/status/l0ik2t7vl2qxw3yk/branch/dev?svg=true)](https://ci.appveyor.com/project/taoyouh/converter/branch/dev)
+
+dev分支在Visual Studio Online Services上的生成及单元测试状态：
+![VSTS Build Status](https://zhaobang.visualstudio.com/_apis/public/build/definitions/8acd3bfa-5e15-4e11-978d-fcaf29fcdbdb/8/badge)
