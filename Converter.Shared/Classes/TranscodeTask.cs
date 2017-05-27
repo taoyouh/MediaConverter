@@ -167,6 +167,11 @@ namespace Converter.Classes
             get { return _outputFileName; }
         }
 
+        public StorageFile OutputFile
+        {
+            get { return destination; }
+        }
+
         public double Progress
         {
             get

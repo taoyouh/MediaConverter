@@ -99,7 +99,30 @@ namespace Converter.ViewModels
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StatusString)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OpenFileButtonVisibility)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OpenFolderButtonVisibility)));
             });
+        }
+
+        public Visibility OpenFileButtonVisibility
+        {
+            get
+            {
+                return task.Status == TranscodeStatus.Completed ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        public Visibility OpenFolderButtonVisibility
+        {
+            get
+            {
+                return task.Status == TranscodeStatus.Completed ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        public async void OpenFile()
+        {
+            await Windows.System.Launcher.LaunchFileAsync(task.OutputFile);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
