@@ -11,10 +11,12 @@ namespace Converter.Classes
 {
     public class TranscodeTask
     {
+        private readonly StorageFile source;
+        private readonly StorageFile _destination;
+        private readonly string _outputFileName;
+        private readonly StorageFolder _destFolder;
+
         private MediaTranscoder transcoder = new MediaTranscoder();
-        private StorageFile source;
-        private StorageFile destination;
-        private string _outputFileName;
         private TranscodeConfiguration config;
         private PrepareTranscodeResult prepareResult;
         private double _progress;
@@ -29,7 +31,11 @@ namespace Converter.Classes
         /// <exception cref="ArgumentNullException">
         /// 当任意参数为null时引发异常。
         /// </exception>
-        public TranscodeTask(StorageFile source, StorageFile destination, TranscodeConfiguration config)
+        public TranscodeTask(
+            StorageFile source,
+            StorageFile destination,
+            TranscodeConfiguration config,
+            StorageFolder destinationFolder = null)
         {
             if (source == null)
             {
@@ -47,8 +53,9 @@ namespace Converter.Classes
             }
 
             this.source = source;
-            this.destination = destination;
-            _outputFileName = this.destination.Name;
+            this._destination = destination;
+            _outputFileName = this._destination.Name;
+            this._destFolder = destinationFolder;
             this.config = config;
             _status = TranscodeStatus.Created;
             _progress = 0;
@@ -79,12 +86,12 @@ namespace Converter.Classes
                 var sourceProfile = await MediaEncodingProfile.CreateFromFileAsync(source);
                 var destProfile = config.Profile(sourceProfile);
 
-                prepareResult = await transcoder.PrepareFileTranscodeAsync(source, destination, destProfile);
+                prepareResult = await transcoder.PrepareFileTranscodeAsync(source, _destination, destProfile);
 
                 if (prepareResult.CanTranscode)
                 {
                     Status = TranscodeStatus.ReadyToStart;
-                    await destination.RenameAsync(destination.Name + ".transcodetmp", NameCollisionOption.GenerateUniqueName);
+                    await _destination.RenameAsync(_destination.Name + ".transcodetmp", NameCollisionOption.GenerateUniqueName);
                 }
                 else
                 {
@@ -136,7 +143,7 @@ namespace Converter.Classes
             }
 
             Status = TranscodeStatus.Cancelled;
-            await destination.DeleteAsync(StorageDeleteOption.PermanentDelete);
+            await _destination.DeleteAsync(StorageDeleteOption.PermanentDelete);
         }
 
         private void TranscodeTask_ProgressChanged(IAsyncActionWithProgress<double> sender, double progress)
@@ -149,7 +156,7 @@ namespace Converter.Classes
             switch (asyncStatus)
             {
                 case AsyncStatus.Completed:
-                    await destination.RenameAsync(_outputFileName, NameCollisionOption.GenerateUniqueName);
+                    await _destination.RenameAsync(_outputFileName, NameCollisionOption.GenerateUniqueName);
                     Status = TranscodeStatus.Completed;
                     Progress = 100;
                     break;
@@ -167,9 +174,14 @@ namespace Converter.Classes
             get { return _outputFileName; }
         }
 
-        public StorageFile OutputFile
+        public StorageFile Destination
         {
-            get { return destination; }
+            get { return _destination; }
+        }
+
+        public StorageFolder DestFolder
+        {
+            get { return _destFolder; }
         }
 
         public double Progress

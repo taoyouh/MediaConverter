@@ -116,13 +116,25 @@ namespace Converter.ViewModels
         {
             get
             {
-                return task.Status == TranscodeStatus.Completed ? Visibility.Visible : Visibility.Collapsed;
+                if (task.Status == TranscodeStatus.Completed && task.DestFolder != null)
+                {
+                    return Visibility.Visible;
+                }
+                else
+                {
+                    return Visibility.Collapsed;
+                }
             }
         }
 
         public async void OpenFile()
         {
-            await Windows.System.Launcher.LaunchFileAsync(task.OutputFile);
+            await Windows.System.Launcher.LaunchFileAsync(task.Destination);
+        }
+
+        public async void OpenFolder()
+        {
+            await Windows.System.Launcher.LaunchFolderAsync(task.DestFolder);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -27,5 +27,11 @@ namespace Converter.Controls
             var vm = DataContext as ViewModels.TranscodeTaskViewModel;
             vm.OpenFile();
         }
+
+        private void OpenFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = DataContext as ViewModels.TranscodeTaskViewModel;
+            vm.OpenFolder();
+        }
     }
 }
