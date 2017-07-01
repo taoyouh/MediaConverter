@@ -303,4 +303,7 @@
   <data name="TranscodingManager_TasksFinished" xml:space="preserve">
     <value>所有任务已完成</value>
   </data>
+  <data name="PackageName" xml:space="preserve">
+    <value>格式转换</value>
+  </data>
 </root>

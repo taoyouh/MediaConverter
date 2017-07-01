@@ -303,5 +303,7 @@
   <data name="TranscodingManager_TasksFinished" xml:space="preserve">
     <value>All tasks finished</value>
   </data>
-
+  <data name="PackageName" xml:space="preserve">
+    <value>Media Converter</value>
+  </data>
 </root>
