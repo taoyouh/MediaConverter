@@ -43,6 +43,13 @@
             Margin="4,0"
             Orientation="Horizontal">
             <Button
+                x:Name="openFolderButton"
+                Background="Transparent"
+                Click="OpenFolderButton_Click"
+                Visibility="{Binding OpenFolderButtonVisibility}">
+                <SymbolIcon Symbol="Folder" />
+            </Button>
+            <Button
                 x:Name="openFileButton"
                 Background="Transparent"
                 Click="OpenFileButton_Click"
