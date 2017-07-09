@@ -26,7 +26,7 @@ namespace Converter.ViewModels
         private const string ReadyToStart = "TranscodeStatus_ReadyToStart";
         private const string Unknown = "TranscodeStatus_Unknown";
 
-        private TranscodeTask task;
+        private readonly TranscodeTask task;
 
         public TranscodeTask Task
         {

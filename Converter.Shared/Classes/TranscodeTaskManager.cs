@@ -125,7 +125,7 @@ namespace Converter.Classes
                     case ExtendedExecutionResult.Allowed:
                         extendedExeSession.Revoked += ExtendedExeSession_Revoked;
                         break;
-                    case ExtendedExecutionResult.Denied:
+                    default:
                         extendedExeSession.Dispose();
                         extendedExeSession = null;
                         break;

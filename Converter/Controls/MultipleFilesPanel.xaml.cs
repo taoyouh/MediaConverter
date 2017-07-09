@@ -33,7 +33,7 @@ namespace Converter.Controls
             fileList.DataContext = _selectedFiles;
         }
 
-        private ObservableCollection<StorageFile> _selectedFiles =
+        private readonly ObservableCollection<StorageFile> _selectedFiles =
             new ObservableCollection<StorageFile>();
 
         public IReadOnlyCollection<StorageFile> SelectedFiles
