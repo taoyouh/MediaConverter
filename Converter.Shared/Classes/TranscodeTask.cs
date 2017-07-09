@@ -161,15 +161,13 @@ namespace Converter.Classes
                     Status = TranscodeStatus.Completed;
                     Progress = 100;
                     break;
-                case AsyncStatus.Error:
-                    Status = TranscodeStatus.Error;
-                    break;
                 case AsyncStatus.Canceled:
                     Status = TranscodeStatus.Cancelled;
                     break;
                 case AsyncStatus.Started:
                     Status = TranscodeStatus.InProgress;
                     break;
+                case AsyncStatus.Error:
                 default:
                     Status = TranscodeStatus.Error;
                     break;
