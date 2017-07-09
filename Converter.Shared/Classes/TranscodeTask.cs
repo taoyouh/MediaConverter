@@ -16,8 +16,9 @@ namespace Converter.Classes
         private readonly string _outputFileName;
         private readonly StorageFolder _destFolder;
 
-        private MediaTranscoder transcoder = new MediaTranscoder();
-        private TranscodeConfiguration config;
+        private readonly MediaTranscoder transcoder = new MediaTranscoder();
+        private readonly TranscodeConfiguration config;
+
         private PrepareTranscodeResult prepareResult;
         private double _progress;
         private TranscodeStatus _status;
@@ -165,6 +166,12 @@ namespace Converter.Classes
                     break;
                 case AsyncStatus.Canceled:
                     Status = TranscodeStatus.Cancelled;
+                    break;
+                case AsyncStatus.Started:
+                    Status = TranscodeStatus.InProgress;
+                    break;
+                default:
+                    Status = TranscodeStatus.Error;
                     break;
             }
         }

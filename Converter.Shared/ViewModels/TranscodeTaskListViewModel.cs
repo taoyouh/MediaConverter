@@ -11,9 +11,9 @@ namespace Converter.ViewModels
 {
     internal class TranscodeTaskListViewModel
     {
-        private TranscodeTaskManager manager;
+        private readonly TranscodeTaskManager manager;
 
-        private ObservableCollection<TranscodeTaskViewModel> taskViewModels =
+        private readonly ObservableCollection<TranscodeTaskViewModel> taskViewModels =
             new ObservableCollection<TranscodeTaskViewModel>();
 
         public ObservableCollection<TranscodeTaskViewModel> TaskViewModels
