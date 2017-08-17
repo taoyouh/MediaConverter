@@ -6,16 +6,18 @@
     <SharedGUID>f22a5506-be02-4812-ada3-f44533223de3</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Converter.Shared</Import_RootNamespace>
+    <Import_RootNamespace>Converter</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Classes\AudioConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Classes\ContainerConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Classes\MediaEncodingProfileHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Classes\Ratio.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Classes\SupportedFormats.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Classes\TranscodeConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Classes\TranscodeTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Classes\TranscodeTaskManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Classes\TranscodeTaskData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Classes\VideoConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TranscodeConfigViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TranscodeTaskListViewModel.cs" />

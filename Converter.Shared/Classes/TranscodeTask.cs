@@ -11,13 +11,15 @@ namespace Converter.Classes
 {
     public class TranscodeTask
     {
-        private readonly StorageFile source;
+        private readonly StorageFile _source;
         private readonly StorageFile _destination;
-        private readonly string _outputFileName;
         private readonly StorageFolder _destFolder;
+        private readonly TranscodeConfiguration _config;
 
-        private MediaTranscoder transcoder = new MediaTranscoder();
-        private TranscodeConfiguration config;
+        private readonly MediaTranscoder transcoder = new MediaTranscoder();
+
+        private string _outputFileName;
+
         private PrepareTranscodeResult prepareResult;
         private double _progress;
         private TranscodeStatus _status;
@@ -52,11 +54,11 @@ namespace Converter.Classes
                 throw new ArgumentNullException(nameof(config));
             }
 
-            this.source = source;
+            this._source = source;
             this._destination = destination;
             _outputFileName = this._destination.Name;
             this._destFolder = destinationFolder;
-            this.config = config;
+            this._config = config;
             _status = TranscodeStatus.Created;
             _progress = 0;
         }
@@ -83,10 +85,10 @@ namespace Converter.Classes
 
             try
             {
-                var sourceProfile = await MediaEncodingProfile.CreateFromFileAsync(source);
-                var destProfile = config.Profile(sourceProfile);
+                var sourceProfile = await MediaEncodingProfile.CreateFromFileAsync(_source);
+                var destProfile = _config.Profile(sourceProfile);
 
-                prepareResult = await transcoder.PrepareFileTranscodeAsync(source, _destination, destProfile);
+                prepareResult = await transcoder.PrepareFileTranscodeAsync(_source, _destination, destProfile);
 
                 if (prepareResult.CanTranscode)
                 {
@@ -169,9 +171,15 @@ namespace Converter.Classes
             }
         }
 
+        public StorageFile Source
+        {
+            get { return _source; }
+        }
+
         public string OutputFileName
         {
             get { return _outputFileName; }
+            set => _outputFileName = value;
         }
 
         public StorageFile Destination
@@ -182,6 +190,11 @@ namespace Converter.Classes
         public StorageFolder DestFolder
         {
             get { return _destFolder; }
+        }
+
+        public TranscodeConfiguration Config
+        {
+            get { return _config; }
         }
 
         public double Progress

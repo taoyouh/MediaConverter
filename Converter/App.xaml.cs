@@ -38,7 +38,7 @@ namespace Converter
         /// 将在启动应用程序以打开特定文件等情况下使用。
         /// </summary>
         /// <param name="e">有关启动请求和过程的详细信息。</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -63,6 +63,12 @@ namespace Converter
 
             if (e.PrelaunchActivated == false)
             {
+                if (Classes.TranscodeTaskManager.Current == null)
+                {
+                    Classes.TranscodeTaskManager.Current = new Classes.TranscodeTaskManager();
+                    await Classes.TranscodeTaskManager.Current.LoadAsync();
+                }
+
                 if (rootFrame.Content == null)
                 {
                     // 当导航堆栈尚未还原时，导航到第一页，
@@ -142,9 +148,11 @@ namespace Converter
         /// </summary>
         /// <param name="sender">挂起的请求的源。</param>
         /// <param name="e">有关挂起请求的详细信息。</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
+
+            await Classes.TranscodeTaskManager.Current.SaveAsync();
 
             // TODO: 保存应用程序状态并停止任何后台活动
             deferral.Complete();

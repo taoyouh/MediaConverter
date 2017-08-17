@@ -17,9 +17,9 @@ namespace Converter.Classes
 
         public uint? Bitrate { get; set; }
 
-        public MediaRatio FrameRate { get; set; }
+        public Ratio FrameRate { get; set; }
 
-        public MediaRatio PixelAspectRatio { get; set; }
+        public Ratio PixelAspectRatio { get; set; }
 
         public VideoEncodingProperties EncodingProfiles(VideoEncodingProperties source)
         {
