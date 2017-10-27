@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="8966ZhaobangChina.2207064921A9A" Publisher="CN=584E9342-CAA7-4820-8744-3B371B8C8C66" Version="1.3.0.0" />
+  <Identity Name="8966ZhaobangChina.2207064921A9A" Publisher="CN=584E9342-CAA7-4820-8744-3B371B8C8C66" Version="1.4.0.0" />
   <mp:PhoneIdentity PhoneProductId="9bb6760b-9dd6-448d-a912-e643798b0104" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>格式转换</DisplayName>

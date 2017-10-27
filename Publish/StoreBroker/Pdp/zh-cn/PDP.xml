@@ -12,7 +12,7 @@
   <Description _locID="App_Description">
     <!-- _locComment_text="{MaxLength=10000} App Description" -->一个利用Windows内置编解码器实现媒体格式转换的应用。支持将FLAC无损音乐转换为苹果的ALAC格式或者MP3、AAC等常见音乐格式。也支持将各种视频格式转换成AVC等兼容性强的格式。欲了解格式支持情况，请下载试用版。</Description>
   <ReleaseNotes _locID="App_ReleaseNotes">
-    <!-- _locComment_text="{MaxLength=1500} App Release Note" -->
+    <!-- _locComment_text="{MaxLength=1500} App Release Note" -->支持直接打开完成转码的文件。改进了UI。
   </ReleaseNotes>
   <ScreenshotCaptions>
     <!-- Valid length: 200 character limit, up to 9 elements per platform -->
