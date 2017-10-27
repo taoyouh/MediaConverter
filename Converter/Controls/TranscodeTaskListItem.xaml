@@ -47,7 +47,7 @@
                 Background="Transparent"
                 Click="OpenFolderButton_Click"
                 Visibility="{Binding OpenFolderButtonVisibility}">
-                <SymbolIcon Symbol="Folder" />
+                <SymbolIcon Symbol="OpenLocal" />
             </Button>
             <Button
                 x:Name="openFileButton"
