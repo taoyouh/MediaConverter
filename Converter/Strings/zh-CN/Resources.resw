@@ -171,6 +171,9 @@
   <data name="CreateMultipleTasks_SubmitButton.Content" xml:space="preserve">
     <value>创建任务</value>
   </data>
+  <data name="CreateMultipleTask_TitleBlock.Text" xml:space="preserve">
+    <value>批量创建任务</value>
+  </data>
   <data name="CreateTask_CannotStart" xml:space="preserve">
     <value>无法开始任务。可能是因为缺少编解码器。</value>
   </data>
@@ -193,6 +196,9 @@
     <value>请选择输出文件</value>
   </data>
   <data name="CreateTask_SubmitButton.Content" xml:space="preserve">
+    <value>创建任务</value>
+  </data>
+  <data name="CreateTask_TitleBlock.Text" xml:space="preserve">
     <value>创建任务</value>
   </data>
   <data name="FileBrowseControl_BrowseButton.Content" xml:space="preserve">

@@ -86,7 +86,7 @@ namespace Converter.Pages
                 else
                 {
                     task.StartTranscode();
-                    TranscodingManager.Current.Tasks.Add(task);
+                    TranscodeTaskManager.Current.Tasks.Add(task);
                     Frame.GoBack();
                 }
             }

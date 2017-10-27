@@ -7,7 +7,7 @@ using Converter.Classes;
 
 namespace Converter.ViewModels
 {
-    internal class TranscodeConfigListItem
+    internal class TranscodeConfigViewModel
     {
         public string DisplayName { get; set; }
 

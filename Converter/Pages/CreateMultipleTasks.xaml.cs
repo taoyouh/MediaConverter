@@ -76,7 +76,7 @@ namespace Converter.Pages
                     var destination = await outputFolder.CreateFileAsync(
                         destFileName, CreationCollisionOption.GenerateUniqueName);
 
-                    tasks.Add(new TranscodeTask(source, destination, config));
+                    tasks.Add(new TranscodeTask(source, destination, config, outputFolder));
                 }
 
                 // 执行转码准备
@@ -120,7 +120,7 @@ namespace Converter.Pages
                     {
                         tasks.Remove(task);
                         task.StartTranscode();
-                        TranscodingManager.Current.Tasks.Add(task);
+                        TranscodeTaskManager.Current.Tasks.Add(task);
                     }
                     else
                     {

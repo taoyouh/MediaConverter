@@ -15,7 +15,7 @@ Media Converter是一个可以转换媒体文件格式的UWP应用项目，应�
 
 ## 生成
 在安装有以下软件的计算机上，可直接使用Visual Studio生成：
-- Visual Studio 2015以上版本
+- Visual Studio 2017以上版本
 - Windows 10 SDK 10.0.14393
 
 dev分支在AppVeyor上的生成状态：

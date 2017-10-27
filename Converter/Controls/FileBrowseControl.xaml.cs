@@ -19,7 +19,7 @@ namespace Converter.Controls
 {
     public abstract partial class FileBrowseControl : UserControl
     {
-        public FileBrowseControl()
+        protected FileBrowseControl()
         {
             this.InitializeComponent();
         }

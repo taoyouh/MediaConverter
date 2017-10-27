@@ -25,36 +25,36 @@ namespace Converter.Classes
             };
         }
 
-        public static IEnumerable<TranscodeConfigListItem> TranscodeConfigs()
+        public static IEnumerable<TranscodeConfigViewModel> TranscodeConfigs()
         {
-            return new TranscodeConfigListItem[]
+            return new TranscodeConfigViewModel[]
             {
-                new TranscodeConfigListItem()
+                new TranscodeConfigViewModel()
                 {
                     DisplayName = "ALAC",
                     Configuration = TranscodeConfiguration.CreateAlac()
                 },
-                new TranscodeConfigListItem()
+                new TranscodeConfigViewModel()
                 {
                     DisplayName = "FLAC",
                     Configuration = TranscodeConfiguration.CreateFlac()
                 },
-                new TranscodeConfigListItem()
+                new TranscodeConfigViewModel()
                 {
                     DisplayName = "MP3",
                     Configuration = TranscodeConfiguration.CreateMp3()
                 },
-                new TranscodeConfigListItem()
+                new TranscodeConfigViewModel()
                 {
                     DisplayName = "M4A (AAC)",
                     Configuration = TranscodeConfiguration.CreateAac()
                 },
-                new TranscodeConfigListItem()
+                new TranscodeConfigViewModel()
                 {
                     DisplayName = "WMA9",
                     Configuration = TranscodeConfiguration.CreateWma()
                 },
-                new TranscodeConfigListItem()
+                new TranscodeConfigViewModel()
                 {
                     DisplayName = "MP4 (AVC + AAC)",
                     Configuration = TranscodeConfiguration.CreateMp4Avc()

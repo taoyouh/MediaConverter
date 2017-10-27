@@ -13,6 +13,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -25,7 +26,7 @@
         <StackPanel
             x:Name="progressPanel"
             Grid.Row="1"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             Orientation="Vertical">
             <TextBlock
                 FontSize="10"
@@ -35,6 +36,26 @@
                 Maximum="100"
                 Minimum="0"
                 Value="{Binding Progress}" />
+        </StackPanel>
+        <StackPanel
+            x:Name="ActionsPanel"
+            Grid.Column="2"
+            Margin="4,0"
+            Orientation="Horizontal">
+            <Button
+                x:Name="openFolderButton"
+                Background="Transparent"
+                Click="OpenFolderButton_Click"
+                Visibility="{Binding OpenFolderButtonVisibility}">
+                <SymbolIcon Symbol="OpenLocal" />
+            </Button>
+            <Button
+                x:Name="openFileButton"
+                Background="Transparent"
+                Click="OpenFileButton_Click"
+                Visibility="{Binding OpenFileButtonVisibility}">
+                <SymbolIcon Symbol="OpenFile" />
+            </Button>
         </StackPanel>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>

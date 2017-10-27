@@ -1,4 +1,5 @@
 ﻿using Converter.Classes;
+using Converter.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,7 +30,7 @@ namespace Converter
         {
             this.InitializeComponent();
 
-            taskListView.DataContext = TranscodingManager.Current.Tasks;
+            taskListView.DataContext = TranscodeTaskListViewModel.Current.TaskViewModels;
         }
 
         private void CreateTaskButton_Click(object sender, RoutedEventArgs e)

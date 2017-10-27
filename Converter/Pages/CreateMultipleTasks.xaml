@@ -25,20 +25,28 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <TextBlock
+            x:Name="TitleBlock"
+            x:Uid="CreateMultipleTask_TitleBlock"
+            Margin="12"
+            VerticalAlignment="Top"
+            FontSize="{ThemeResource HubHeaderThemeFontSize}"
+            Text="CreateMultipleTask"
+            TextWrapping="WrapWholeWords" />
         <ScrollViewer
             Grid.Row="1"
             HorizontalScrollMode="Disabled"
             VerticalScrollBarVisibility="Auto">
-            <StackPanel Margin="8" Orientation="Vertical">
+            <StackPanel Margin="0" Orientation="Vertical">
                 <controls:MultipleFilesPanel
                     x:Name="inputFilesPanel"
                     MaxHeight="400"
-                    Margin="8" />
-                <controls:TranscodeConfigPicker x:Name="formatPicker" Margin="8" />
+                    Margin="12" />
+                <controls:TranscodeConfigPicker x:Name="formatPicker" Margin="12" />
                 <controls:FolderPickerControl
                     x:Name="outputFolderBrowser"
                     x:Uid="CreateMultipleTasks_OutputFolderBrowser"
-                    Margin="8"
+                    Margin="12"
                     Header="Output Folder" />
             </StackPanel>
         </ScrollViewer>
@@ -46,7 +54,7 @@
             x:Name="submitButton"
             x:Uid="CreateMultipleTasks_SubmitButton"
             Grid.Row="2"
-            Margin="8"
+            Margin="12"
             Click="SubmitButton_Click"
             Content="Create Tasks" />
         <toolkit:Loading

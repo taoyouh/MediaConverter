@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:Converter"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Converter.ViewModels"
     mc:Ignorable="d">
 
     <Page.Transitions>
@@ -20,7 +21,7 @@
     </Page.Transitions>
 
     <Page.Resources>
-        <DataTemplate x:Key="TaskListItem" x:DataType="classes:TranscodeTask">
+        <DataTemplate x:Key="TaskListItem" x:DataType="vm:TranscodeTaskViewModel">
             <controls:TranscodeTaskListItem DataContext="{x:Bind}" />
         </DataTemplate>
         <Style x:Key="TaskListViewItemStyle" TargetType="ListViewItem">
