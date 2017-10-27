@@ -4,7 +4,7 @@ branches:
   - master
   - dev
 skip_branch_with_pr: false
-image: Visual Studio 2015
+image: Visual Studio 2017
 environment:
   clientSecret:
     secure: u2MqrnmS+4jSw1IQjBViTCmrVJ5OUo8bvswGz3HcF4L+qX2ZPYNrPRSKfOpWMUvr
