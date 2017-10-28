@@ -23,6 +23,7 @@ namespace Converter.Classes
         private PrepareTranscodeResult prepareResult;
         private double _progress;
         private TranscodeStatus _status;
+        private IAsyncActionWithProgress<double> transcodeOperation;
 
         /// <summary>
         /// 创建TranscodeTask实例。
@@ -120,9 +121,26 @@ namespace Converter.Classes
             }
 
             Status = TranscodeStatus.InProgress;
-            var transcodeTask = prepareResult.TranscodeAsync();
-            transcodeTask.Progress += TranscodeTask_ProgressChanged;
-            transcodeTask.Completed += TranscodeTask_Completed;
+            transcodeOperation = prepareResult.TranscodeAsync();
+            transcodeOperation.Progress += TranscodeTask_ProgressChanged;
+            transcodeOperation.Completed += TranscodeTask_Completed;
+        }
+
+        /// <summary>
+        /// 状态为<see cref="TranscodeStatus.ReadyToStart"/>或<see cref="TranscodeStatus.InProgress"/>
+        /// 时取消转码操作，否则不做任何操作。所有文件不受影响。
+        /// </summary>
+        public void Cancel()
+        {
+            if (transcodeOperation != null)
+            {
+                transcodeOperation.Cancel();
+            }
+            else if (Status == TranscodeStatus.ReadyToStart)
+            {
+                StartTranscode();
+                transcodeOperation.Cancel();
+            }
         }
 
         /// <summary>

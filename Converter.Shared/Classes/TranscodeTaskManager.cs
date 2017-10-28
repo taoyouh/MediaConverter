@@ -187,6 +187,7 @@ namespace Converter.Classes
             {
                 if (task.Status == TranscodeStatus.InProgress)
                 {
+                    task.Cancel();
                     if (fa.Entries.Count < fa.MaximumItemsAllowed)
                     {
                         if (!fa.CheckAccess(task.Destination))
