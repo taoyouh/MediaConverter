@@ -66,7 +66,11 @@ namespace Converter
                 if (Classes.TranscodeTaskManager.Current == null)
                 {
                     Classes.TranscodeTaskManager.Current = new Classes.TranscodeTaskManager();
-                    await Classes.TranscodeTaskManager.Current.LoadAsync();
+                    try
+                    {
+                        await Classes.TranscodeTaskManager.Current.LoadAsync();
+                    }
+                    catch { }
                 }
 
                 if (rootFrame.Content == null)

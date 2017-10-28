@@ -21,7 +21,9 @@ namespace Converter.Classes
         private const string TasksFinished = "TranscodingManager_TasksFinished";
         private const string SessionDescription = "TranscodingManager_SessionDescription";
         private const string ExtendedExecutionRevoked = "TranscodingManager_ExtendedExecutionRevoked";
+        private const string CantDeserialize = "TranscodingManager_CantDeserialize";
         private const string TranscodingManagerNotificationGroup = "Mgr";
+        private const string SaveFileName = "tasks.xml";
 
         private static TranscodeTaskManager _current;
 
@@ -238,37 +240,49 @@ namespace Converter.Classes
             }
 
             var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
-                "tasks.xml", CreationCollisionOption.ReplaceExisting);
+                SaveFileName, CreationCollisionOption.ReplaceExisting);
             var serializer = new System.Xml.Serialization.XmlSerializer(typeof(List<TranscodeTaskData>));
-            using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
+            using (var stream = await file.OpenStreamForWriteAsync())
             {
-                serializer.Serialize(stream.AsStream(), taskDataList);
+                serializer.Serialize(stream, taskDataList);
             }
 
         }
 
+        /// <summary>
+        /// 从状态保存文件<see cref="SaveFileName"/>中加载之前未完成的任务
+        /// </summary>
+        /// <exception cref="LoadFailedException">
+        /// 当状态保存文件存在，但无法从状态恢复
+        /// </exception>
+        /// <returns>无返回值，可等待</returns>
         public async Task LoadAsync()
         {
             StorageFile file;
             try
             {
-                file = await ApplicationData.Current.LocalFolder.GetFileAsync("tasks.xml");
+                file = await ApplicationData.Current.LocalFolder.GetFileAsync(SaveFileName);
             }
-            catch
-            {
-                return;
-            }
-
-            if (file == null)
+            catch (FileNotFoundException)
             {
                 return;
             }
 
             List<TranscodeTaskData> taskDataErrorList = new List<TranscodeTaskData>();
             var serializer = new System.Xml.Serialization.XmlSerializer(typeof(List<TranscodeTaskData>));
-            using (var stream = await file.OpenAsync(FileAccessMode.Read))
+            using (var stream = await file.OpenStreamForReadAsync())
             {
-                var taskDataList = (List<TranscodeTaskData>)serializer.Deserialize(stream.AsStream());
+                List<TranscodeTaskData> taskDataList;
+                try
+                {
+                    taskDataList = (List<TranscodeTaskData>)serializer.Deserialize(stream);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    var message = new ResourceLoader().GetString(CantDeserialize);
+                    throw new LoadFailedException(message, ex);
+                }
+
                 foreach (var taskData in taskDataList)
                 {
                     try
@@ -325,8 +339,18 @@ namespace Converter.Classes
                 }
             }
 
-            var fa = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList;
-            await file.DeleteAsync();
+            try
+            {
+                await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
+            }
+            catch (FileNotFoundException) { }
+        }
+
+        public class LoadFailedException : Exception
+        {
+            public LoadFailedException(string message, Exception innerException)
+                : base(message, innerException)
+            { }
         }
     }
 }

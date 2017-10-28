@@ -303,4 +303,7 @@
   <data name="TranscodingManager_TasksFinished" xml:space="preserve">
     <value>所有任务已完成</value>
   </data>
+  <data name="App_CantLoad" xml:space="preserve">
+    <value>无法加载之前未完成的任务</value>
+  </data>
 </root>
