@@ -20,25 +20,25 @@ $appxPath = [System.IO.Path]::Combine($env:rootPath, "Build\AppxPackages\")
 
 $outPath = [System.IO.Path]::Combine($env:rootPath, "Publish\SubmissionPackage\")
 
-"Initializing submission package path"
+Write-Host "Initializing submission package path" -ForegroundColor Cyan
 if (Test-Path -Path $outPath)
 {
     Remove-Item -Force -Recurse -Path $outPath
 }
 New-Item -Type Directory -Force -Path $outPath
 
-"Logging in to Dev Center"
+Write-Host "Logging in to Dev Center" -ForegroundColor Cyan
 $cred = New-Object System.Management.Automation.PSCredential $clientId, $clientSecret
 Set-StoreBrokerAuthentication -TenantId $tenantId -Credential $cred
 
-"Looking for appxupload at " + $appxPath
+Write-Host ("Looking for appxupload at " + $appxPath) -ForegroundColor Cyan
 $appxuploads = (Get-ChildItem -Path $appxPath | Where-Object Name -like "*.appxupload")
 
-"Creating submission package:"
+Write-Host "Creating submission package:" -ForegroundColor Cyan
 New-SubmissionPackage -ConfigPath $configPath -PDPRootPath $pdpRootPath -ImagesRootPath $imageRootPath -OutPath $outPath -OutName $outName -AppxPath $appxuploads.FullName
 
-"Submitting package to Dev Center"
+Write-Host "Submitting package to Dev Center" -ForegroundColor Cyan
 Update-ApplicationSubmission -AppId $appId -SubmissionDataPath ($outPath + $outName + ".json") -PackagePath ($outPath + $outName + ".zip") -Force -ReplacePackages -UpdateListings -TargetPublishMode Manual -AutoCommit
 
-"Clearing Authentication"
+Write-Host "Clearing Authentication" -ForegroundColor Cyan
 Clear-StoreBrokerAuthentication

@@ -17,22 +17,24 @@ deploy_script:
 - ps: >-
     if ($env:APPVEYOR_REPO_BRANCH -eq "master")
     {
-        Add-AppveyorCompilationMessage "Publishing to Windows Store. " -Category Information
         if (-not [String]::IsNullOrEmpty($env:clientSecret))
         {
-            .\Publish\InstallStoreBroker.ps1
-            .\Publish\AppVeyorInit.ps1
             try
             {
+                .\Publish\InstallStoreBroker.ps1
+                .\Publish\AppVeyorInit.ps1
                 .\Publish\PublishToStore.ps1
+                Add-AppveyorMessage "Published to Store"
             }
             catch
             {
-                Add-AppveyorCompilationMessage "Publishing to Store failed. " -Category Error
+                Add-AppveyorMessage "Publishing to Store failed. " -Category Error
+                exit 1
             }
         }
         else
         {
-            Add-AppveyorCompilationMessage "Environment variable clientSecret is not set. " -Category Error 
+            Add-AppveyorMessage "Environment variable clientSecret is not set. " -Category Error 
+            exit 1
         }
     }

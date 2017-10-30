@@ -61,7 +61,7 @@ namespace Converter.Controls
             }
         }
 
-        private void TranscodeConfigComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void TranscodeConfigComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _selectedConfiguration =
                 (transcodeConfigComboBox.SelectedItem as TranscodeConfigViewModel)?.
@@ -71,6 +71,17 @@ namespace Converter.Controls
                 Visibility.Collapsed : Visibility.Visible;
             VideoPanel.Visibility = _selectedConfiguration?.Video == null ?
                 Visibility.Collapsed : Visibility.Visible;
+
+            if (_selectedConfiguration?.Container?.Subtype?.ToUpper() == "FLAC")
+            {
+                var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+                ContentDialog dialog = new ContentDialog
+                {
+                    Content = loader.GetString("TranscodeConfigPicker_FlacWarning"),
+                    PrimaryButtonText = loader.GetString("Dialog_Ok")
+                };
+                await dialog.ShowAsync();
+            }
         }
 
         public delegate void ConfigChangedEventHandler(object sender, EventArgs e);
