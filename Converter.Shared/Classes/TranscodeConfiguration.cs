@@ -136,7 +136,6 @@ namespace Converter.Classes
 
             if (containerName != null)
             {
-                
                 Container = new ContainerConfiguration
                 {
                     Subtype = containerName
