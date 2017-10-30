@@ -303,4 +303,10 @@
   <data name="TranscodingManager_TasksFinished" xml:space="preserve">
     <value>所有任务已完成</value>
   </data>
+  <data name="Dialog_Ok" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="TranscodeConfigPicker_FlacWarning" xml:space="preserve">
+    <value>经测试，将带有专辑封面的音乐转换为FLAC格式时可能会发生闪退。这可能是Windows系统问题导致的，我们正在尝试修复此问题。</value>
+  </data>
 </root>

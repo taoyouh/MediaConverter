@@ -71,6 +71,17 @@ namespace Converter.Controls
                 Visibility.Collapsed : Visibility.Visible;
             VideoPanel.Visibility = _selectedConfiguration?.Video == null ?
                 Visibility.Collapsed : Visibility.Visible;
+
+            if (_selectedConfiguration.Container.Subtype.ToUpper() == "FLAC")
+            {
+                var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+                ContentDialog dialog = new ContentDialog()
+                {
+                    Content = loader.GetString("TranscodeConfigPicker_FlacWarning"),
+                    PrimaryButtonText = loader.GetString("Dialog_Ok")
+                };
+                var result = dialog.ShowAsync();
+            }
         }
 
         public delegate void ConfigChangedEventHandler(object sender, EventArgs e);
