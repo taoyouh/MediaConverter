@@ -11,7 +11,9 @@ environment:
 build_script:
 - ps: >-
     .\Build\BuildConfig.ps1
+
     .\Build\AppVeyorBuild.ps1
+    
 artifacts:
 - path: '.\AppxPackages'
   name: AppxPackages
