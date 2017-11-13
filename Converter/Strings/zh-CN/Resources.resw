@@ -309,4 +309,8 @@
   <data name="TranscodeConfigPicker_FlacWarning" xml:space="preserve">
     <value>经测试，将带有专辑封面的音乐转换为FLAC格式时可能会发生闪退。这可能是Windows系统问题导致的，我们正在尝试修复此问题。</value>
   </data>
+  <data name="CreateTask_FileNotSupported" xml:space="preserve">
+    <value>Windows操作系统无法解码您选择的文件。
+只有使用”电影与电视“应用和”Groove音乐“应用能直接播放的文件才能够转码。</value>
+  </data>
 </root>

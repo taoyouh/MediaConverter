@@ -44,6 +44,7 @@
                     Margin="12"
                     Header="Input File"
                     SelectionChanged="InputFilePicker_SelectionChanged" />
+                <MediaPlayerElement x:Name="inputFilePreview" AreTransportControlsEnabled="True" />
                 <controls:TranscodeConfigPicker
                     x:Name="formatPicker"
                     Margin="12"
