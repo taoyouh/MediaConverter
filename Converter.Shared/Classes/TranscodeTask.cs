@@ -96,11 +96,32 @@ namespace Converter.Classes
                 }
                 else
                 {
+                    switch (prepareResult.FailureReason)
+                    {
+                        case TranscodeFailureReason.CodecNotFound:
+                            FailureReason = TranscodeTaskFailureReason.CodecNotFound;
+                            break;
+                        case TranscodeFailureReason.InvalidProfile:
+                            FailureReason = TranscodeTaskFailureReason.InvalidProfile;
+                            break;
+                        default:
+                            FailureReason = TranscodeTaskFailureReason.Unknown;
+                            break;
+                    }
+
                     Status = TranscodeStatus.Error;
                 }
             }
-            catch (Exception)
+            catch (ArgumentException ex)
             {
+                Exception = ex;
+                FailureReason = TranscodeTaskFailureReason.CantCreateProfile;
+                Status = TranscodeStatus.Error;
+            }
+            catch (Exception ex)
+            {
+                Exception = ex;
+                FailureReason = TranscodeTaskFailureReason.Unknown;
                 Status = TranscodeStatus.Error;
             }
         }
@@ -169,6 +190,8 @@ namespace Converter.Classes
                     break;
                 case AsyncStatus.Error:
                 default:
+                    FailureReason = TranscodeTaskFailureReason.TranscodingFailed;
+                    Exception = sender.ErrorCode;
                     Status = TranscodeStatus.Error;
                     break;
             }
@@ -223,6 +246,10 @@ namespace Converter.Classes
             }
         }
 
+        public TranscodeTaskFailureReason FailureReason { get; private set; } = TranscodeTaskFailureReason.None;
+
+        public Exception Exception { get; private set; } = null;
+
         public event EventHandler<double> ProgressChanged;
 
         public event EventHandler<TranscodeStatus> StatusChanged;
@@ -237,5 +264,15 @@ namespace Converter.Classes
             Cancelled,
             Error
         }
+    }
+
+    public enum TranscodeTaskFailureReason
+    {
+        None,
+        CantCreateProfile,
+        InvalidProfile,
+        CodecNotFound,
+        TranscodingFailed,
+        Unknown
     }
 }

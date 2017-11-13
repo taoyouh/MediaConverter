@@ -20,6 +20,8 @@ namespace Converter.Controls
 {
     public sealed partial class TranscodeConfigPicker : UserControl
     {
+        private TranscodeConfiguration _customConfig = new TranscodeConfiguration();
+
         public TranscodeConfigPicker()
         {
             this.InitializeComponent();
@@ -154,6 +156,63 @@ namespace Converter.Controls
         private void VideoBitrateBox_LostFocus(object sender, RoutedEventArgs e)
         {
             UpdateValueOrWarnError(sender as TextBox, ref videoBitrate);
+        }
+
+        private void containerBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(containerBox.Text))
+            {
+                _customConfig.Container = null;
+            }
+            else if (_customConfig.Container != null)
+            {
+                _customConfig.Container.Subtype = containerBox.Text;
+            }
+            else
+            {
+                _customConfig.Container = new ContainerConfiguration { Subtype = containerBox.Text };
+            }
+
+            _selectedConfiguration = _customConfig;
+            SelectedFormatChanged?.Invoke(this, new EventArgs());
+        }
+
+        private void audioBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(audioBox.Text))
+            {
+                _customConfig.Audio = null;
+            }
+            else if (_customConfig.Audio != null)
+            {
+                _customConfig.Audio.Subtype = audioBox.Text;
+            }
+            else
+            {
+                _customConfig.Audio = new AudioConfiguration { Subtype = audioBox.Text };
+            }
+
+            _selectedConfiguration = _customConfig;
+            SelectedFormatChanged?.Invoke(this, new EventArgs());
+        }
+
+        private void videoBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(videoBox.Text))
+            {
+                _customConfig.Video = null;
+            }
+            else if (_customConfig.Video != null)
+            {
+                _customConfig.Video.Subtype = videoBox.Text;
+            }
+            else
+            {
+                _customConfig.Video = new VideoConfiguration { Subtype = videoBox.Text };
+            }
+
+            _selectedConfiguration = _customConfig;
+            SelectedFormatChanged?.Invoke(this, new EventArgs());
         }
     }
 }

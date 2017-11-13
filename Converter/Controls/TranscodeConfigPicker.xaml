@@ -29,6 +29,15 @@
             ItemTemplate="{StaticResource TranscodeConfigItemTemplate}"
             ItemsSource="{Binding}"
             SelectionChanged="TranscodeConfigComboBox_SelectionChanged" />
+        <TextBox
+            x:Name="containerBox"
+            TextChanged="containerBox_TextChanged"/>
+        <TextBox
+            x:Name="audioBox"
+            TextChanged="audioBox_TextChanged"/>
+        <TextBox
+            x:Name="videoBox"
+            TextChanged="videoBox_TextChanged"/>
         <StackPanel x:Name="AudioPanel">
             <TextBlock
                 x:Uid="TranscodeConfigPicker_AudioHeader"
