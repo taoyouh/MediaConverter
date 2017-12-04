@@ -2,7 +2,6 @@ version: Build {build}
 branches:
   only:
   - master
-  - dev
 skip_branch_with_pr: false
 image: Visual Studio 2017
 environment:
