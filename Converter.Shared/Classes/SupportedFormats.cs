@@ -14,15 +14,7 @@ namespace Converter.Classes
         {
             return new string[]
             {
-                ".m4a",
-                ".m4v",
-                ".mp4",
-                ".mp3",
-                ".mpg",
-                ".mpeg",
-                ".flac",
-                ".mts",
-                ".m2ts"
+                "*"
             };
         }
 

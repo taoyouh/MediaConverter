@@ -5,9 +5,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Media.Core;
 using Windows.Media.MediaProperties;
+using Windows.Media.Playback;
 using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -35,12 +38,40 @@ namespace Converter.Pages
         {
             this.InitializeComponent();
 
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            inputFilePreview.SetMediaPlayer(mediaPlayer);
+            mediaPlayer.MediaFailed += MediaPlayer_MediaFailed;
+            mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
+
             inputFilePicker.OpenFileFilters = SupportedFormats.InputFileTypes();
 
             outputFilePicker.SaveFileChoices = new List<KeyValuePair<string, IList<string>>>()
             {
                 (formatPicker.SelectedConfiguration ?? new TranscodeConfiguration()).SaveChoice()
             };
+        }
+
+        private async void MediaPlayer_MediaOpened(MediaPlayer sender, object args)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                inputFilePreview.Visibility = Visibility.Visible;
+            });
+        }
+
+        private async void MediaPlayer_MediaFailed(Windows.Media.Playback.MediaPlayer sender, Windows.Media.Playback.MediaPlayerFailedEventArgs args)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+            {
+                inputFilePreview.Visibility = Visibility.Collapsed;
+                var loader = new ResourceLoader();
+                ContentDialog dialog = new ContentDialog
+                {
+                    Content = loader.GetString("CreateTask_FileNotSupported"),
+                    PrimaryButtonText = loader.GetString("Dialog_Ok")
+                };
+                await dialog.ShowAsync();
+            });
         }
 
         private void FormatPicker_SelectedConfigChanged(object sender, EventArgs newConfig)
@@ -104,7 +135,16 @@ namespace Converter.Pages
         private void InputFilePicker_SelectionChanged(object sender, EventArgs e)
         {
             var selectedFile = inputFilePicker.SelectedItem as StorageFile;
-            outputFilePicker.SuggestedFileName = selectedFile?.DisplayName ?? string.Empty;
+            if (selectedFile == null)
+            {
+                inputFilePreview.Source = null;
+                outputFilePicker.SuggestedFileName = string.Empty;
+            }
+            else
+            {
+                inputFilePreview.Source = MediaSource.CreateFromStorageFile(selectedFile);
+                outputFilePicker.SuggestedFileName = selectedFile.DisplayName ?? string.Empty;
+            }
         }
     }
 }

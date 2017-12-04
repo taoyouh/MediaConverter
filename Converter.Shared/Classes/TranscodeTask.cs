@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Media.MediaProperties;
@@ -11,6 +12,8 @@ namespace Converter.Classes
 {
     public class TranscodeTask
     {
+        private static SemaphoreSlim semaphore = new SemaphoreSlim(Environment.ProcessorCount, Environment.ProcessorCount);
+
         private readonly StorageFile source;
         private readonly StorageFile _destination;
         private readonly string _outputFileName;
@@ -139,10 +142,14 @@ namespace Converter.Classes
                 throw new InvalidOperationException();
             }
 
-            Status = TranscodeStatus.InProgress;
-            var transcodeTask = prepareResult.TranscodeAsync();
-            transcodeTask.Progress += TranscodeTask_ProgressChanged;
-            transcodeTask.Completed += TranscodeTask_Completed;
+            Task.Run(() =>
+            {
+                semaphore.Wait();
+                Status = TranscodeStatus.InProgress;
+                var transcodeTask = prepareResult.TranscodeAsync();
+                transcodeTask.Progress += TranscodeTask_ProgressChanged;
+                transcodeTask.Completed += TranscodeTask_Completed;
+            });
         }
 
         /// <summary>
@@ -195,6 +202,8 @@ namespace Converter.Classes
                     Status = TranscodeStatus.Error;
                     break;
             }
+
+            semaphore.Release();
         }
 
         public string OutputFileName
