@@ -2,7 +2,8 @@ version: Build {build}
 branches:
   only:
   - master
-skip_branch_with_pr: false
+  - dev
+skip_branch_with_pr: true
 image: Visual Studio 2017
 environment:
   PUBLISH_CLIENTSECRET:
