@@ -6,7 +6,7 @@ branches:
 skip_branch_with_pr: false
 image: Visual Studio 2017
 environment:
-  clientSecret:
+  PUBLISH_CLIENTSECRET:
     secure: u2MqrnmS+4jSw1IQjBViTCmrVJ5OUo8bvswGz3HcF4L+qX2ZPYNrPRSKfOpWMUvr
 build_script:
 - ps: >-
