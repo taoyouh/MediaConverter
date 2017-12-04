@@ -41,6 +41,7 @@ namespace Converter.Pages
             MediaPlayer mediaPlayer = new MediaPlayer();
             inputFilePreview.SetMediaPlayer(mediaPlayer);
             mediaPlayer.MediaFailed += MediaPlayer_MediaFailed;
+            mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
 
             inputFilePicker.OpenFileFilters = SupportedFormats.InputFileTypes();
 
@@ -50,10 +51,19 @@ namespace Converter.Pages
             };
         }
 
+        private async void MediaPlayer_MediaOpened(MediaPlayer sender, object args)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                inputFilePreview.Visibility = Visibility.Visible;
+            });
+        }
+
         private async void MediaPlayer_MediaFailed(Windows.Media.Playback.MediaPlayer sender, Windows.Media.Playback.MediaPlayerFailedEventArgs args)
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
             {
+                inputFilePreview.Visibility = Visibility.Collapsed;
                 var loader = new ResourceLoader();
                 ContentDialog dialog = new ContentDialog
                 {
