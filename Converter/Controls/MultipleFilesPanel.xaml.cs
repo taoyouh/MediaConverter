@@ -91,10 +91,7 @@ namespace Converter.Controls
             if (itemToAdd is StorageFile)
             {
                 var file = itemToAdd as StorageFile;
-                if (OpenFileFilters.Contains(file.FileType))
-                {
-                    _selectedFiles.Add(file);
-                }
+                _selectedFiles.Add(file);
             }
             else if (itemToAdd is StorageFolder)
             {
