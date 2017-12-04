@@ -120,6 +120,37 @@ namespace Converter.Classes
             return result;
         }
 
+        public TranscodeConfiguration()
+        {
+        }
+
+        public TranscodeConfiguration(string containerName, string audioName, string videoName)
+        {
+            if (audioName != null)
+            {
+                Audio = new AudioConfiguration
+                {
+                    Subtype = audioName
+                };
+            }
+
+            if (containerName != null)
+            {
+                Container = new ContainerConfiguration
+                {
+                    Subtype = containerName
+                };
+            }
+
+            if (videoName != null)
+            {
+                Video = new VideoConfiguration
+                {
+                    Subtype = videoName
+                };
+            }
+        }
+
         public AudioConfiguration Audio { get; set; }
 
         public ContainerConfiguration Container { get; set; }

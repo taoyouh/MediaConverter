@@ -9,9 +9,13 @@ environment:
   clientSecret:
     secure: u2MqrnmS+4jSw1IQjBViTCmrVJ5OUo8bvswGz3HcF4L+qX2ZPYNrPRSKfOpWMUvr
 build_script:
-- ps: .\Build\Build.ps1
+- ps: >-
+    .\Build\BuildConfig.ps1
+
+    .\Build\AppVeyorBuild.ps1
+    
 artifacts:
-- path: '\Build\AppxPackages'
+- path: '.\AppxPackages'
   name: AppxPackages
 deploy_script:
 - ps: >-
@@ -22,7 +26,7 @@ deploy_script:
             try
             {
                 .\Publish\InstallStoreBroker.ps1
-                .\Publish\AppVeyorInit.ps1
+                .\Publish\PublishConfig.ps1
                 .\Publish\PublishToStore.ps1
                 Add-AppveyorMessage "Published to Store"
             }

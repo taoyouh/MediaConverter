@@ -1,22 +1,19 @@
-﻿# 需要的环境变量：
-# $env:rootPath：项目根目录地址
-# $env:clientSecret：Azure AD的Client Secret
-
-# 从Build\AppxPackages中获取appxupload格式安装包
+﻿# 从AppxPackages中获取appxupload格式安装包
 # 从Publish\StoreBroker\Pdb中获取商店描述信息
 # 自动替换已有的包和商店描述信息，并自动提交
 
-$tenantId = "05fd4458-757f-4d64-8c5d-ca5617532083"
-$clientId = "07e52762-7779-4184-8d85-b2f8ebd64d5d"
-$clientSecret = $env:clientSecret | ConvertTo-SecureString -AsPlainText -Force
+$rootPath = Get-Location
+$tenantId = $env:PUBLISH_TENANTID
+$clientId = $env:PUBLISH_CLINETID
+$clientSecret = $env:PUBLISH_CLIENTSECRET
+$appId = $appId
 
-$appId = "9NDJV6K3G2TJ"
 $outName = "Submission"
 
 $configPath = [System.IO.Path]::Combine($env:rootPath, "Publish\StoreBroker\SBConfig.json")
 $pdpRootPath = [System.IO.Path]::Combine($env:rootPath, "Publish\StoreBroker\Pdp\")
 $imageRootPath = [System.IO.Path]::Combine($env:rootPath, "Publish\StoreBroker\Images\")
-$appxPath = [System.IO.Path]::Combine($env:rootPath, "Build\AppxPackages\")
+$appxPath = [System.IO.Path]::Combine($env:rootPath, "AppxPackages\")
 
 $outPath = [System.IO.Path]::Combine($env:rootPath, "Publish\SubmissionPackage\")
 

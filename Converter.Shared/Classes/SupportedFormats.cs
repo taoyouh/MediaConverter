@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Media.MediaProperties;
 
 namespace Converter.Classes
 {
@@ -13,15 +14,7 @@ namespace Converter.Classes
         {
             return new string[]
             {
-                ".m4a",
-                ".m4v",
-                ".mp4",
-                ".mp3",
-                ".mpg",
-                ".mpeg",
-                ".flac",
-                ".mts",
-                ".m2ts"
+                "*"
             };
         }
 
@@ -54,7 +47,15 @@ namespace Converter.Classes
                     DisplayName = "WMA9",
                     Configuration = TranscodeConfiguration.CreateWma()
                 },
-                new TranscodeConfigViewModel()
+                new TranscodeConfigViewModel
+                {
+                    DisplayName = "AC3",
+                    Configuration = new TranscodeConfiguration(
+                        MediaEncodingSubtypes.Mpeg4,
+                        "AC3",
+                        null)
+                },
+                new TranscodeConfigViewModel
                 {
                     DisplayName = "MP4 (AVC + AAC)",
                     Configuration = TranscodeConfiguration.CreateMp4Avc()

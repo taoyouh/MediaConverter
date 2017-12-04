@@ -1,5 +1,5 @@
-﻿$projectPath = [System.IO.Path]::Combine($env:APPVEYOR_BUILD_FOLDER, "Converter\Converter.csproj")
-$destination = [System.IO.Path]::Combine($env:APPVEYOR_BUILD_FOLDER, "Build\AppxPackages")
+﻿$projectPath = [System.IO.Path]::Combine($env:APPVEYOR_BUILD_FOLDER, $env:BUILD_PROJECTFILE)
+$destination = [System.IO.Path]::Combine($env:APPVEYOR_BUILD_FOLDER, "AppxPackages")
 
 Write-Host "Restoring packages" -ForegroundColor Cyan
 msbuild $projectPath /t:restore /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
