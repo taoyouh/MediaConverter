@@ -6,7 +6,7 @@ $rootPath = Get-Location
 $tenantId = $env:PUBLISH_TENANTID
 $clientId = $env:PUBLISH_CLINETID
 $clientSecret = $env:PUBLISH_CLIENTSECRET | ConvertTo-SecureString -AsPlainText -Force
-$appId = $appId
+$appId = $env:PUBLISH_APPID
 
 $outName = "Submission"
 
