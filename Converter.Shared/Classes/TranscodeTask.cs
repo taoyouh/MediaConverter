@@ -179,6 +179,7 @@ namespace Converter.Classes
                     Status = TranscodeStatus.Error;
                     break;
             }
+
             semaphore.Release();
         }
 
