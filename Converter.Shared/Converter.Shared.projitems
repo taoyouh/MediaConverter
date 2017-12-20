@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Classes\TranscodeTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Classes\TranscodeTaskManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Classes\VideoConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExtendedExecutionHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TranscodeConfigViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TranscodeTaskListViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TranscodeTaskViewModel.cs" />
