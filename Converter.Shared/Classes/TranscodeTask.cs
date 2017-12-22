@@ -26,6 +26,8 @@ namespace Converter.Classes
         private double _progress;
         private TranscodeStatus _status;
 
+        private Deferral deferral;
+
         /// <summary>
         /// 创建TranscodeTask实例。
         /// </summary>
@@ -123,6 +125,7 @@ namespace Converter.Classes
 
             Task.Run(() =>
             {
+                deferral = ExtendedExecutionHelper.GetDeferral();
                 semaphore.Wait();
                 Status = TranscodeStatus.InProgress;
                 var transcodeTask = prepareResult.TranscodeAsync();
@@ -161,6 +164,7 @@ namespace Converter.Classes
 
         private async void TranscodeTask_Completed(IAsyncActionWithProgress<double> sender, AsyncStatus asyncStatus)
         {
+            deferral.Complete();
             switch (asyncStatus)
             {
                 case AsyncStatus.Completed:
