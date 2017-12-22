@@ -88,10 +88,6 @@ namespace Converter.Classes
             {
                 AllTasksFinished();
             }
-            else
-            {
-                TaskStarted();
-            }
         }
 
         private void TranscodeTask_StatusChanged(object sender, TranscodeStatus e)
@@ -100,38 +96,10 @@ namespace Converter.Classes
             {
                 AllTasksFinished();
             }
-            else
-            {
-                TaskStarted();
-            }
         }
 
         public ObservableCollection<TranscodeTask> Tasks
         { get; } = new ObservableCollection<TranscodeTask>();
-
-        private static ExtendedExecutionSession extendedExeSession;
-
-        private async void TaskStarted()
-        {
-            if (extendedExeSession == null)
-            {
-                extendedExeSession = new ExtendedExecutionSession();
-                extendedExeSession.Reason = ExtendedExecutionReason.Unspecified;
-                extendedExeSession.Description = new ResourceLoader().GetString(SessionDescription);
-
-                var extendedExeResult = await extendedExeSession.RequestExtensionAsync();
-                switch (extendedExeResult)
-                {
-                    case ExtendedExecutionResult.Allowed:
-                        extendedExeSession.Revoked += ExtendedExeSession_Revoked;
-                        break;
-                    default:
-                        extendedExeSession.Dispose();
-                        extendedExeSession = null;
-                        break;
-                }
-            }
-        }
 
         private void ExtendedExeSession_Revoked(object sender, ExtendedExecutionRevokedEventArgs args)
         {
@@ -144,13 +112,6 @@ namespace Converter.Classes
         private void AllTasksFinished()
         {
             PopToastIfEnabled(new ResourceLoader().GetString(TasksFinished));
-
-            if (extendedExeSession != null)
-            {
-                extendedExeSession.Revoked -= ExtendedExeSession_Revoked;
-                extendedExeSession.Dispose();
-                extendedExeSession = null;
-            }
         }
 
         private void PopToastIfEnabled(string message)

@@ -31,6 +31,7 @@ namespace Converter
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            this.Resuming += OnResuming;
         }
 
         /// <summary>
@@ -147,7 +148,13 @@ namespace Converter
             var deferral = e.SuspendingOperation.GetDeferral();
 
             // TODO: 保存应用程序状态并停止任何后台活动
+            ExtendedExecutionHelper.OnSuspending();
             deferral.Complete();
+        }
+
+        private void OnResuming(object sender, object e)
+        {
+            ExtendedExecutionHelper.OnResuming();
         }
     }
 }
